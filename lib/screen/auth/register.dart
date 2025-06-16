@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_event_id/widget/auth/login/form.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class Register extends StatelessWidget {
+  const Register({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,6 @@ class Login extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(40),
                               topRight: Radius.circular(40))),
-                      child: const FormLogin(),
                     )
                   ],
                 )

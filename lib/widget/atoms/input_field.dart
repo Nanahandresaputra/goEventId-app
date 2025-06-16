@@ -5,7 +5,8 @@ class InputField extends StatefulWidget {
   final TextEditingController? controller;
   final String? label;
   final bool? isEmail;
-  final bool? obscureText;
+  final bool? isPassword;
+  // final bool? obscureText;
   final bool? required;
   final double? width;
   final bool? errorValidation;
@@ -22,25 +23,27 @@ class InputField extends StatefulWidget {
     return false;
   }
 
-  InputField({
-    super.key,
-    this.controller,
-    this.label,
-    this.isEmail,
-    this.obscureText,
-    this.required,
-    this.width,
-    this.errorValidation,
-    this.errorValidationText,
-    this.keyboardType,
-    this.minLines,
-  });
+  InputField(
+      {super.key,
+      this.controller,
+      this.label,
+      this.isEmail,
+      // this.obscureText,
+      this.required,
+      this.width,
+      this.errorValidation,
+      this.errorValidationText,
+      this.keyboardType,
+      this.minLines,
+      this.isPassword});
 
   @override
   State<InputField> createState() => _InputFieldState();
 }
 
 class _InputFieldState extends State<InputField> {
+  bool pwdVisibility = false;
+
   @override
   Widget build(BuildContext context) {
     bool emailValidator(dynamic value) {
@@ -55,13 +58,25 @@ class _InputFieldState extends State<InputField> {
       margin: const EdgeInsets.only(bottom: 17),
       child: TextFormField(
         controller: widget.controller,
-        obscureText: widget.obscureText ?? false,
+        obscureText: widget.isPassword ?? false ? !pwdVisibility : false,
         keyboardType: widget.keyboardType,
         minLines: widget.minLines,
-        maxLines: widget.obscureText != true && widget.minLines != null
+        maxLines: pwdVisibility != true && widget.minLines != null
             ? widget.minLines
             : 1,
         decoration: InputDecoration(
+            suffixIcon: widget.isPassword ?? false
+                ? InkWell(
+                    onTap: () => {
+                      setState(() {
+                        pwdVisibility = !pwdVisibility;
+                      })
+                    },
+                    child: Icon(pwdVisibility
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                  )
+                : null,
             labelText: widget.label,
             hintText: 'Masukan ${widget.label}',
             labelStyle: const TextStyle(fontSize: 14),

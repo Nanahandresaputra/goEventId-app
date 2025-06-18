@@ -13,6 +13,7 @@ class InputField extends StatefulWidget {
   final String? errorValidationText;
   final TextInputType? keyboardType;
   final int? minLines;
+  final Icon? prefixIcon;
 
   late final String? _textInput = controller?.text;
 
@@ -35,7 +36,8 @@ class InputField extends StatefulWidget {
       this.errorValidationText,
       this.keyboardType,
       this.minLines,
-      this.isPassword});
+      this.isPassword,
+      this.prefixIcon});
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -65,6 +67,7 @@ class _InputFieldState extends State<InputField> {
             ? widget.minLines
             : 1,
         decoration: InputDecoration(
+            prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword ?? false
                 ? InkWell(
                     onTap: () => {

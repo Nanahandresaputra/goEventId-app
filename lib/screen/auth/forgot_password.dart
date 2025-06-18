@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_event_id/screen/auth/login.dart';
-import 'package:go_event_id/widget/auth/register/form.dart';
+import 'package:go_event_id/widget/auth/forgot_password/form.dart';
 
-class Register extends StatelessWidget {
-  const Register({super.key});
+class ForgotPassword extends StatelessWidget {
+  const ForgotPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class Register extends StatelessWidget {
                                   )
                                 ],
                               )),
-                          const FormRegister()
+                          const FormForgotPassword()
                         ],
                       ),
                     )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_event_id/screen/auth/forgot_password.dart';
 import 'package:go_event_id/screen/auth/register.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/atoms/input_field.dart';
@@ -38,7 +39,7 @@ class FormLogin extends StatelessWidget {
                     isEmail: true,
                   ),
                   InputField(
-                    label: 'Password',
+                    label: 'Kata Sandi',
                     isPassword: true,
                   ),
                   const SizedBox(
@@ -50,7 +51,12 @@ class FormLogin extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()));
+              },
               child: const Text(
                 'Lupa kata sandi',
                 style: TextStyle(color: Color(0xFF235146)),

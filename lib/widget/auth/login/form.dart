@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_event_id/screen/acara/list_acara.dart';
 import 'package:go_event_id/screen/auth/forgot_password.dart';
 import 'package:go_event_id/screen/auth/register.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
@@ -45,7 +46,14 @@ class FormLogin extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomElevatedBtn(onPressed: () {}, label: 'Login')
+                  CustomElevatedBtn(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ListAcara()));
+                      },
+                      label: 'Login')
                 ],
               )),
           Align(

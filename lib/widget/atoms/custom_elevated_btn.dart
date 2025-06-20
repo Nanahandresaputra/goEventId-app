@@ -6,11 +6,13 @@ class CustomElevatedBtn extends StatelessWidget {
   final bool? isLoading;
   final Color? color;
   final double? width;
+  final Icon? icon;
 
   const CustomElevatedBtn(
       {super.key,
       required this.onPressed,
-      required this.label,
+      this.label,
+      this.icon,
       this.isLoading,
       this.width,
       this.color});
@@ -33,11 +35,13 @@ class CustomElevatedBtn extends StatelessWidget {
                     color: Colors.white,
                   ),
                 )
-              : Text(
-                  '$label',
-                  style: const TextStyle(
-                      color: Colors.white, fontSize: 16, height: 3),
-                )),
+              : label != null
+                  ? Text(
+                      '$label',
+                      style: const TextStyle(
+                          color: Colors.white, fontSize: 16, height: 3),
+                    )
+                  : icon),
     );
   }
 }

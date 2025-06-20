@@ -9,6 +9,7 @@ class InputField extends StatefulWidget {
   // final bool? obscureText;
   final bool? required;
   final double? width;
+  final double? height;
   final bool? errorValidation;
   final String? errorValidationText;
   final TextInputType? keyboardType;
@@ -32,6 +33,7 @@ class InputField extends StatefulWidget {
       // this.obscureText,
       this.required,
       this.width,
+      this.height,
       this.errorValidation,
       this.errorValidationText,
       this.keyboardType,
@@ -57,6 +59,7 @@ class _InputFieldState extends State<InputField> {
 
     return Container(
       width: widget.width,
+      height: widget.height,
       margin: const EdgeInsets.only(bottom: 17),
       child: TextFormField(
         controller: widget.controller,

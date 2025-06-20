@@ -10,14 +10,19 @@ class Footer extends StatefulWidget {
 }
 
 class _FooterState extends State<Footer> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      iconSize: 30,
+      selectedLabelStyle:
+          const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      unselectedLabelStyle:
+          const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       currentIndex: widget.defaultCurrent ?? _currentIndex,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white60,
-      backgroundColor: const Color(0xFF58BDBD),
+      selectedItemColor: const Color(0xFF235347),
+      unselectedItemColor: Colors.black26,
+      backgroundColor: Colors.white,
       elevation: 8,
       onTap: (value) {
         setState(() {
@@ -36,12 +41,12 @@ class _FooterState extends State<Footer> {
       },
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Beranda',
+          icon: Icon(Icons.receipt_long_outlined),
+          label: 'Riwayat',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add_box_rounded),
-          label: 'Tambah',
+          icon: Icon(Icons.home),
+          label: 'Beranda',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),

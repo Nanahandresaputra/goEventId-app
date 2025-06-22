@@ -55,7 +55,7 @@ class _CategoriesBarState extends State<CategoriesBar> {
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.easeIn,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: const Color(0xFFDBF0DD),
                           borderRadius:
                               BorderRadius.circular(widget.borderRadius),
                           border: _currentIndex == index || isHoverList[index]
@@ -73,7 +73,7 @@ class _CategoriesBarState extends State<CategoriesBar> {
                                 Icons.add_reaction_rounded,
                                 Icons.music_off_outlined,
                               ][index],
-                              color: Color(0xFF235347),
+                              color: const Color(0xFF235347),
                             ),
                             const SizedBox(
                               height: 4,

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_event_id/widget/acara/list_content.dart';
 import 'package:go_event_id/widget/atoms/categories_bar.dart';
-import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/atoms/footer.dart';
 import 'package:go_event_id/widget/atoms/search_field.dart';
 
@@ -16,19 +14,22 @@ class ListAcara extends StatefulWidget {
 class _ListAcaraState extends State<ListAcara> {
   TextEditingController searchText = TextEditingController();
   String searchVal = '';
+  double scrollVal = 0.0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(searchVal == '' ? 230 : 70),
+          preferredSize:
+              Size.fromHeight(searchVal == '' && scrollVal == 0.0 ? 230 : 70),
           child: AppBar(
-            backgroundColor: const Color(0xFFDBF0DD),
+            backgroundColor: Colors.white,
             flexibleSpace: Container(
-              color: const Color(0xFFDBF0DD),
+              color: Colors.white,
               padding: const EdgeInsets.only(left: 20, right: 20),
               // color: Colors.green,
-              height: searchVal == '' ? 280 : 100,
+              height: searchVal == '' && scrollVal == 0.0 ? 280 : 100,
               // margin:
               //     EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08),
               child: Column(
@@ -50,23 +51,12 @@ class _ListAcaraState extends State<ListAcara> {
                           textController: searchText,
                         ),
                       ),
-                      // const SizedBox(
-                      //   width: 10,
-                      // ),
-                      // CustomElevatedBtn(
-                      //   onPressed: () {},
-                      //   icon: const Icon(
-                      //     Icons.search,
-                      //     color: Colors.white,
-                      //   ),
-                      //   width: 70,
-                      // ),
                     ],
                   ),
                   SizedBox(
-                    height: searchVal == '' ? 18 : 0,
+                    height: searchVal == '' && scrollVal == 0.0 ? 18 : 0,
                   ),
-                  searchVal == ''
+                  searchVal == '' && scrollVal == 0.0
                       ? const Image(image: AssetImage('assets/img/banner.png'))
                       : const SizedBox()
                 ],
@@ -75,17 +65,19 @@ class _ListAcaraState extends State<ListAcara> {
           ),
         ),
         bottomNavigationBar: const Footer(),
-        body: Container(
-            color: const Color(0xFFDBF0DD),
-            padding: const EdgeInsets.only(top: 20),
-            // height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              physics: const ScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                ),
+        body: SingleChildScrollView(
+          child: NotificationListener<ScrollEndNotification>(
+            onNotification: (notification) {
+              setState(() {
+                scrollVal = notification.metrics.pixels;
+              });
+
+              return true;
+            },
+            child: Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(top: 14, left: 20, right: 20),
+                // height: MediaQuery.of(context).size.height * 0.4,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -99,11 +91,20 @@ class _ListAcaraState extends State<ListAcara> {
                     SizedBox(
                       height: searchVal == '' ? 30 : 10,
                     ),
-                    const ListContent()
+                    SizedBox(
+                      height: searchVal == '' && scrollVal == 0.0
+                          ? MediaQuery.of(context).size.height * 0.5
+                          : MediaQuery.of(context).size.height * 0.75,
+                      child: const SingleChildScrollView(
+                        padding: EdgeInsets.only(bottom: 100),
+                        physics: ScrollPhysics(),
+                        child: ListContent(),
+                      ),
+                    )
                   ],
-                ),
-              ),
-            )),
+                )),
+          ),
+        ),
       ),
     );
   }

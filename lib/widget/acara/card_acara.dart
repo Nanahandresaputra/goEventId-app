@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CardAcara extends StatelessWidget {
-  const CardAcara({super.key});
+  final Function onPress;
+  const CardAcara({required this.onPress, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        onPress();
+      },
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(

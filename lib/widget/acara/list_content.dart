@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_event_id/screen/detail_acara/detail_acara.dart';
 import 'package:go_event_id/widget/acara/card_acara.dart';
 
 class ListContent extends StatelessWidget {
@@ -18,7 +19,16 @@ class ListContent extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.black26, width: 1)),
-              child: const CardAcara(),
+              child: CardAcara(
+                onPress: () {
+                  print('press');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DetailAcara(),
+                      ));
+                },
+              ),
             );
           }),
     );

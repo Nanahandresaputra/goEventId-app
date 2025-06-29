@@ -1,18 +1,25 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class ApiUrl {
-  ApiUrl();
-
-  String baseUrl = 'http://192.168.0.107/ci4-api-apotek/public';
-
-// product
-  late String products = '$baseUrl/produk';
-  late String productFindOne = '$baseUrl/product';
-
-  String productFind(int? dataId) {
-    return dataId != null ? '$products/$dataId' : products;
+  ApiUrl() {
+    print('base uri --> $baseUrl');
   }
 
-// auth
+  dynamic baseUrl = dotenv.env['BASE_API_URL'];
 
-  late String register = '$baseUrl/registrasi';
-  late String login = '$baseUrl/login';
+// product
+  // late String products = '$baseUrl/produk';
+  // late String productFindOne = '$baseUrl/product';
+
+  // String productFind(int? dataId) {
+  //   return dataId != null ? '$products/$dataId' : products;
+  // }
+
+// auth
+  late String register = '$baseUrl/auth/register';
+  late String login = '$baseUrl/auth/login';
+
+// Acara
+  late String acara = '$baseUrl/acara';
+  late String tiketAcara = '$baseUrl/tiket-acara';
 }

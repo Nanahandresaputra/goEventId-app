@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_event_id/feature/model/acara_model.dart';
 
 class CategoriTag extends StatelessWidget {
-  final String? label;
-  const CategoriTag({this.label = 'Konser', super.key});
+  final Kategori? kategori;
+  const CategoriTag({this.kategori, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +19,21 @@ class CategoriTag extends StatelessWidget {
             borderRadius: BorderRadius.circular(10)),
         child: Row(
           children: <Widget>[
-            const Icon(
-              Icons.music_note,
-              color: Color(0xFF235347),
+            Icon(
+              kategori?.id == 1
+                  ? Icons.sports_soccer_rounded
+                  : kategori?.id == 2
+                      ? Icons.add_reaction_rounded
+                      : kategori?.id == 3
+                          ? Icons.music_note_sharp
+                          : kategori?.id == 4
+                              ? Icons.festival_rounded
+                              : Icons.not_interested_sharp,
+              color: const Color(0xFF235347),
               size: 20,
             ),
             Text(
-              '$label',
+              '${kategori?.namaKategori}',
               style: const TextStyle(color: Color(0xFF235347), fontSize: 14),
             )
           ],

@@ -13,6 +13,7 @@ class ApiExeception implements Exception {
       'statusCode': statusCode,
       'message': message,
     };
+
     // if (statusCode != null) {
     //   return {
     //     'statusCode': statusCode,

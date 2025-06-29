@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:go_event_id/feature/model/acara_model.dart';
 import 'package:go_event_id/screen/acara/list_acara.dart';
 import 'package:go_event_id/screen/payment/payment.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
@@ -6,7 +9,8 @@ import 'package:go_event_id/widget/detail_acara/detail_description.dart';
 import 'package:go_event_id/widget/detail_acara/detail_ticket.dart';
 
 class DetailAcara extends StatefulWidget {
-  const DetailAcara({super.key});
+  final Datum? data;
+  const DetailAcara({this.data, super.key});
 
   @override
   State<DetailAcara> createState() => _DetailAcaraState();
@@ -57,9 +61,11 @@ class _DetailAcaraState extends State<DetailAcara> {
               ),
               // expandedHeight: 100,
               floating: true,
-              flexibleSpace: const FlexibleSpaceBar(
+              flexibleSpace: FlexibleSpaceBar(
                 background: Image(
-                  image: AssetImage('assets/img/event-banner-dummy.png'),
+                  image: widget.data?.bannerImg is String
+                      ? MemoryImage(base64Decode(widget.data!.bannerImg))
+                      : const AssetImage('assets/img/event-banner-dummy.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -76,10 +82,18 @@ class _DetailAcaraState extends State<DetailAcara> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Column(
+                  child: Column(
                     children: <Widget>[
-                      DetailDescription(),
-                      SizedBox(
+                      DetailDescription(
+                        kategori: widget.data?.kategori,
+                        eventName: widget.data?.namaAcara,
+                        dateEvent: widget.data?.waktuAcara,
+                        address:
+                            '${widget.data?.alamat}, ${widget.data?.kabupatenkota.nama}, ${widget.data?.provinsi.nama}',
+                        mapTicketImg: widget.data?.mapTiketImg,
+                        description: widget.data?.deskripsi,
+                      ),
+                      const SizedBox(
                         height: 25,
                       ),
                       DetailTicket()

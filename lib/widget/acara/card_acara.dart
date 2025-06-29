@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:go_event_id/feature/model/acara_model.dart';
 
 class CardAcara extends StatelessWidget {
+  final Datum? data;
   final Function onPress;
-  const CardAcara({required this.onPress, super.key});
+  const CardAcara({required this.onPress, this.data, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +25,22 @@ class CardAcara extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: const Color(0xFF84AF94), width: 0.5)),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: Image(
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/img/event-banner-dummy.png'),
+                  image: data?.bannerImg is String
+                      ? MemoryImage(base64Decode(data!.bannerImg))
+                      : const AssetImage('assets/img/event-banner-dummy.png'),
                   height: 120,
                   width: 400,
                   // height: 80,
                   // width: 80,
                 )),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Column(
@@ -42,25 +49,25 @@ class CardAcara extends StatelessWidget {
               children: <Widget>[
                 Text(
                   maxLines: 2,
-                  "Lorem Ipsum Dolor Sit Amet Event Indonesia",
+                  '${data?.namaAcara}',
                   // softWrap: false,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                       overflow: TextOverflow.ellipsis),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Text(
-                  "12 Jan 2025",
-                  style: TextStyle(
+                  '${data?.waktuAcara}',
+                  style: const TextStyle(
                       fontWeight: FontWeight.w500, color: Colors.black38),
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  "Kelapa Gading, Jakarta Utara",
-                  style: TextStyle(
+                  '${data?.kabupatenkota.nama}, ${data?.provinsi.nama}',
+                  style: const TextStyle(
                       fontWeight: FontWeight.w500, color: Colors.black38),
                   overflow: TextOverflow.ellipsis,
                 )

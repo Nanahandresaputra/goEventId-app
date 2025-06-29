@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_event_id/screen/acara/list_acara.dart';
+import 'package:go_event_id/screen/profile/menu_profile.dart';
+import 'package:go_event_id/screen/riwayat/riwayat_transaksi.dart';
 
 class Footer extends StatefulWidget {
   final Function()? onTap;
@@ -32,15 +35,17 @@ class _FooterState extends State<Footer> {
           setState(() {
             _currentIndex = value;
           });
-          if (value == 1) {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => const FormProduct() ));
-          } else if (value == 2) {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (constext) => const Account()));
+          if (value == 0) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RiwayatTransaksi()));
+          } else if (value == 1) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (constext) => const ListAcara()));
           } else {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (constext) => const ListProduct()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (constext) => const MenuProfile()));
           }
         },
         items: const <BottomNavigationBarItem>[

@@ -1,19 +1,37 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:go_event_id/feature/model/acara_model.dart';
 import 'package:go_event_id/widget/atoms/catetori_tag.dart';
 import 'package:photo_view/photo_view.dart';
 
 class DetailDescription extends StatelessWidget {
-  const DetailDescription({super.key});
+  final String? dateEvent;
+  final String? address;
+  final String? description;
+  final String? mapTicketImg;
+  final String? eventName;
+  final Kategori? kategori;
+  const DetailDescription(
+      {this.dateEvent,
+      this.eventName,
+      this.address,
+      this.description,
+      this.mapTicketImg,
+      this.kategori,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const CategoriTag(),
-        const Text(
-          'Lorem Ipsum Dolor Sit Amet Event Indonesia',
-          style: TextStyle(
+        CategoriTag(
+          kategori: kategori,
+        ),
+        Text(
+          '$eventName',
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -21,36 +39,38 @@ class DetailDescription extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        const Row(
+        Row(
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.date_range_outlined,
               color: Colors.black38,
               size: 20,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             Text(
-              '12 Jan 2025',
+              '$dateEvent',
               style: TextStyle(color: Colors.black38),
             )
           ],
         ),
-        const Row(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.location_on_sharp,
               color: Colors.black38,
               size: 20,
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
-            Text(
-              'Kelapa Gading, Jakarta Utara',
-              style: TextStyle(color: Colors.black38),
-            ),
+            Expanded(
+                child: Text(
+              '$address',
+              style: const TextStyle(color: Colors.black38),
+            )),
           ],
         ),
         const SizedBox(
@@ -60,8 +80,8 @@ class DetailDescription extends StatelessWidget {
           'Deskripsi',
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
-        const Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        Text(
+          "$description",
           textAlign: TextAlign.justify,
         ),
         const SizedBox(
@@ -69,12 +89,13 @@ class DetailDescription extends StatelessWidget {
         ),
         // Image(image: AssetImage('assets/img/map-ticket-dummy.png'))
         SizedBox(
-            height: 200,
+            height: 300,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: PhotoView(
-                  imageProvider:
-                      const AssetImage('assets/img/map-ticket-dummy.png')),
+                  imageProvider: mapTicketImg is String
+                      ? MemoryImage(base64Decode(mapTicketImg!))
+                      : const AssetImage('assets/img/event-banner-dummy.png')),
             )),
       ],
     );

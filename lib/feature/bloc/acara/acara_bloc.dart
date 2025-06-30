@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_event_id/feature/api/api_execption.dart';
 import 'package:go_event_id/feature/api/api_url.dart';
 import 'package:go_event_id/feature/model/acara_model.dart';
-import 'package:go_event_id/helpers/get_token.dart';
 import 'package:go_event_id/helpers/res_code.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

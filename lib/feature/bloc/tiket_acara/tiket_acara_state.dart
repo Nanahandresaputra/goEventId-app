@@ -4,7 +4,7 @@ abstract class TiketAcaraState {}
 
 class TiketAcaraInitial extends TiketAcaraState {}
 
-class AcaraLoading extends TiketAcaraState {}
+class TiketAcaraLoading extends TiketAcaraState {}
 
 class TiketAcaraSuccess extends TiketAcaraState {
   TiketAcaraModel tiketAcaraModel;

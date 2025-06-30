@@ -22,4 +22,7 @@ class ApiUrl {
 // Acara
   late String acara = '$baseUrl/acara';
   late String tiketAcara = '$baseUrl/tiket-acara';
+
+// Pemesanan
+  late String pemesanan = '$baseUrl/pemesanan';
 }

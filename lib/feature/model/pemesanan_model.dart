@@ -36,19 +36,23 @@ class PemesnanModel {
 class Data {
   String token;
   String redirectUrl;
+  String kodePemesanan;
 
   Data({
     required this.token,
     required this.redirectUrl,
+    required this.kodePemesanan,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         token: json["token"],
         redirectUrl: json["redirect_url"],
+        kodePemesanan: json["kode_pemesanan"],
       );
 
   Map<String, dynamic> toJson() => {
         "token": token,
         "redirect_url": redirectUrl,
+        "kode_pemesanan": kodePemesanan,
       };
 }

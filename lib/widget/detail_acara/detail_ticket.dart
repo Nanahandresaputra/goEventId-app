@@ -108,9 +108,6 @@ class _DetailTicketState extends State<DetailTicket> {
                         ),
                       ),
                     ),
-                  const SizedBox(
-                    height: 20,
-                  )
                 ],
               )
             : const SizedBox()

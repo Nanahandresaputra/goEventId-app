@@ -55,8 +55,48 @@ class PemesananBloc extends Bloc<PemesananEvent, PemesananState> {
                   message: response.body)));
         }
       } catch (e) {
-        print('pemesananErr bloc 2 --> $e');
         emit(PemesananError(
+            apiExeception:
+                ApiExeception(statusCode: 500, message: e.toString())));
+      }
+    });
+
+    on<UpdatePemesananEvent>((event, emit) async {
+      try {
+        emit(UpdatePemesananLoading());
+        final getToken = await SharedPreferences.getInstance();
+        final String token = getToken.getString('token') ?? '';
+        dynamic updatePemesananBody = event.updatePemesananBody;
+        final response = await http.post(Uri.parse(apiUrl.updatePemesanan),
+            body: jsonEncode(updatePemesananBody),
+            headers: {
+              'token': token,
+              HttpHeaders.contentTypeHeader: 'application/json'
+            });
+        if (RespCode(response.body).statusCode == 200 ||
+            RespCode(response.body).statusCode == 201) {
+          if (RespCode(response.body).statusCode == 200 ||
+              RespCode(response.body).statusCode == 201) {
+            emit(UpdatePemesananSuccess());
+          } else {
+            print(' update pemesananErr bloc 0 --> ${response.body}');
+            emit(UpdatePemesananError(
+                apiExeception: ApiExeception(
+                    statusCode: RespCode(response.body).statusCode,
+                    message: response.body)));
+          }
+        } else {
+          print('update pemesananErr bloc 1 --> ${response.body}');
+
+          emit(UpdatePemesananError(
+              apiExeception: ApiExeception(
+                  statusCode: RespCode(response.body).statusCode,
+                  message: response.body)));
+        }
+      } catch (e) {
+        print('update pemesananErr bloc 1 --> $e');
+
+        emit(UpdatePemesananError(
             apiExeception:
                 ApiExeception(statusCode: 500, message: e.toString())));
       }

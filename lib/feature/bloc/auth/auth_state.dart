@@ -14,8 +14,6 @@ class RegisterError extends AuthState {
   RegisterError({required this.apiExeception});
 }
 
-class LoginInitial extends AuthState {}
-
 class LoginLoading extends AuthState {}
 
 class LoginSuccess extends AuthState {
@@ -27,4 +25,14 @@ class LoginError extends AuthState {
   ApiExeception? apiExeception;
 
   LoginError({required this.apiExeception});
+}
+
+class LogoutLoading extends AuthState {}
+
+class LogoutSuccess extends AuthState {}
+
+class LogoutError extends AuthState {
+  ApiExeception? apiExeception;
+
+  LogoutError({required this.apiExeception});
 }

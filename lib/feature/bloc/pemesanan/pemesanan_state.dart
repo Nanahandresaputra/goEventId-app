@@ -16,3 +16,13 @@ class PemesananError extends PemesananState {
 
   PemesananError({required this.apiExeception});
 }
+
+class UpdatePemesananLoading extends PemesananState {}
+
+class UpdatePemesananSuccess extends PemesananState {}
+
+class UpdatePemesananError extends PemesananState {
+  ApiExeception? apiExeception;
+
+  UpdatePemesananError({required this.apiExeception});
+}

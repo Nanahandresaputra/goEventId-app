@@ -18,6 +18,7 @@ class ApiUrl {
 // auth
   late String register = '$baseUrl/auth/register';
   late String login = '$baseUrl/auth/login';
+  late String logout = '$baseUrl/auth/logout';
 
 // Acara
   late String acara = '$baseUrl/acara';
@@ -25,4 +26,8 @@ class ApiUrl {
 
 // Pemesanan
   late String pemesanan = '$baseUrl/pemesanan';
+  late String updatePemesanan = '$pemesanan/update-status';
+
+// Riwayat
+  late String riwayat = '$baseUrl/riwayat';
 }

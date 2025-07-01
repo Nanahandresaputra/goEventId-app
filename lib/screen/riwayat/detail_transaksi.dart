@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_event_id/screen/riwayat/riwayat_transaksi.dart';
-import 'package:go_event_id/widget/riwayat/detail_transaksi/acara_info.dart';
 import 'package:go_event_id/widget/riwayat/detail_transaksi/e_tiket.dart';
 
 class DetailTransaksi extends StatelessWidget {
-  const DetailTransaksi({super.key});
+  final dynamic data;
+  const DetailTransaksi({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,15 @@ class DetailTransaksi extends StatelessWidget {
                 ),
               ),
             )),
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
-              children: <Widget>[ETiket()],
+              children: <Widget>[
+                ETiket(
+                  data: data,
+                )
+              ],
             ),
           ),
         ),

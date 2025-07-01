@@ -11,6 +11,7 @@ import 'package:go_event_id/screen/payment/payment.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/detail_acara/detail_description.dart';
 import 'package:go_event_id/widget/detail_acara/detail_ticket.dart';
+import 'package:go_event_id/widget/detail_acara/terms_condition.dart';
 import 'package:go_event_id/widget/execption_message/network_error.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -63,9 +64,6 @@ class _DetailAcaraState extends State<DetailAcara> {
             builder: (context, statePemesanan) {
               WidgetsBinding.instance.addPostFrameCallback((_) async {
                 if (statePemesanan is PemesananError) {
-                  print(
-                      'state pemesanan --> ${statePemesanan.apiExeception!.statusCode}');
-
                   if (statePemesanan.apiExeception!.statusCode == 401) {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => const Login()));
@@ -93,21 +91,20 @@ class _DetailAcaraState extends State<DetailAcara> {
                 }
               });
               return Scaffold(
-                bottomNavigationBar: Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Colors.black,
-                            offset: Offset(0, 6),
-                            blurRadius: 10)
-                      ]),
-                  child: reqPemesanan['tiket_acara_id'] != null
-                      ? CustomElevatedBtn(
+                bottomNavigationBar: reqPemesanan['tiket_acara_id'] != null
+                    ? Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.black,
+                                  offset: Offset(0, 6),
+                                  blurRadius: 10)
+                            ]),
+                        child: CustomElevatedBtn(
                           isLoading: statePemesanan is PemesananLoading,
                           onPressed: () async {
-                            print('trigger ---> $reqPemesanan');
                             context.read<PemesananBloc>().add(
                                 PostPemesananEvent(
                                     pemesananBody: reqPemesanan));
@@ -115,9 +112,8 @@ class _DetailAcaraState extends State<DetailAcara> {
                             await Future.delayed(const Duration(seconds: 1));
                           },
                           label: 'Beli Tiket',
-                        )
-                      : const SizedBox(),
-                ),
+                        ))
+                    : const SizedBox(),
                 body: stateTiketAcara is TiketAcaraError &&
                         stateTiketAcara.apiExeception!.statusCode == 500
                     ? NetworkError(
@@ -188,7 +184,7 @@ class _DetailAcaraState extends State<DetailAcara> {
                                       description: widget.data?.deskripsi,
                                     ),
                                     const SizedBox(
-                                      height: 25,
+                                      height: 35,
                                     ),
                                     DetailTicket(
                                       onChange: (tiketAcaraId) {
@@ -200,7 +196,14 @@ class _DetailAcaraState extends State<DetailAcara> {
                                         });
                                       },
                                       state: stateTiketAcara,
-                                    )
+                                    ),
+                                    const SizedBox(
+                                      height: 25,
+                                    ),
+                                    const TermsCondition(),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
                                   ],
                                 ))
                           ]))

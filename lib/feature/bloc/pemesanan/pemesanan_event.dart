@@ -8,4 +8,10 @@ class PostPemesananEvent extends PemesananEvent {
   PostPemesananEvent({required this.pemesananBody});
 }
 
+class UpdatePemesananEvent extends PemesananEvent {
+  Map<String, String> updatePemesananBody;
+
+  UpdatePemesananEvent({required this.updatePemesananBody});
+}
+
 class ResetPemesananEvent extends PemesananEvent {}

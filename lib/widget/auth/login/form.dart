@@ -24,8 +24,6 @@ class FormLogin extends StatelessWidget {
     void loginSubmit(context, state) async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      print('state ---> $state');
-
       String? token = prefs.getString('token');
 
       if (token != null) {

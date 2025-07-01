@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 class ETiket extends StatelessWidget {
-  const ETiket({super.key});
+  final dynamic data;
+  const ETiket({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +21,14 @@ class ETiket extends StatelessWidget {
           ]),
       child: Column(
         children: <Widget>[
-          const ClipRRect(
-              borderRadius: BorderRadius.only(
+          ClipRRect(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12), topRight: Radius.circular(12)),
               child: Image(
                 fit: BoxFit.cover,
-                image: AssetImage('assets/img/event-banner-dummy.png'),
+                image: data?.bannerImg is String
+                    ? MemoryImage(base64Decode(data!.bannerImg))
+                    : const AssetImage('assets/img/event-banner-dummy.png'),
                 height: 85,
                 width: double.maxFinite,
               )),
@@ -31,11 +36,11 @@ class ETiket extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Kode Booking'),
-                    Text('KXXXXZZZ9090AAA'),
+                    const Text('Kode Booking'),
+                    Text('${data?.kodeOrder}'),
                   ],
                 ),
                 const SizedBox(
@@ -46,14 +51,14 @@ class ETiket extends StatelessWidget {
                   width: 180,
                   height: 180,
                   child: PrettyQrView.data(
-                    data: 'XXXXZZZ9090AAA',
+                    data: '${data?.kodeOrder}',
                   ),
                 ),
-                const Text(
-                  "Lorem Ipsum Dolor Sit Amet Event Indonesia",
+                Text(
+                  '${data?.acara}',
                   softWrap: true,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
                   ),
@@ -74,11 +79,11 @@ class ETiket extends StatelessWidget {
                   decoration: const BoxDecoration(
                       border:
                           Border(bottom: BorderSide(color: Colors.black26))),
-                  child: const Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Tiket",
                           style: TextStyle(
@@ -88,9 +93,9 @@ class ETiket extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "Tribun Utara",
+                          '${data?.tipeTiket}',
                           textAlign: TextAlign.end,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -103,10 +108,10 @@ class ETiket extends StatelessWidget {
                   decoration: const BoxDecoration(
                       border:
                           Border(bottom: BorderSide(color: Colors.black26))),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Waktu",
                           style: TextStyle(
@@ -115,9 +120,9 @@ class ETiket extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          "15 Jan 2000 18:00",
+                          '${data?.waktuAcara}',
                           textAlign: TextAlign.end,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -130,11 +135,11 @@ class ETiket extends StatelessWidget {
                   decoration: const BoxDecoration(
                       border:
                           Border(bottom: BorderSide(color: Colors.black26))),
-                  child: const Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(
+                      const Expanded(
                         child: Text(
                           "Tempat",
                           style: TextStyle(
@@ -144,9 +149,9 @@ class ETiket extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "Blok Jumat, kecamatan Jatitujuh, kabupaten Majalengka, Jawa Barat",
+                          '${data?.tempatAcara}',
                           textAlign: TextAlign.end,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                       ),

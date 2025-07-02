@@ -4,9 +4,11 @@ class ApiExeception implements Exception {
 
   ApiExeception({this.statusCode, this.message});
 
-  factory ApiExeception.fromMap(Map<String, dynamic> errorMssg) =>
-      ApiExeception(
-          statusCode: errorMssg['statusCode'], message: errorMssg['data']);
+  factory ApiExeception.fromMap(Map<String, dynamic> errorMssg) {
+    print('error body ---> $errorMssg');
+    return ApiExeception(
+        statusCode: errorMssg['statusCode'], message: errorMssg['data']);
+  }
 
   Map<String, dynamic> errorMessage() {
     return {

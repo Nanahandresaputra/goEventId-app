@@ -7,6 +7,8 @@ import 'package:go_event_id/widget/acara/list_content.dart';
 import 'package:go_event_id/widget/atoms/categories_bar.dart';
 import 'package:go_event_id/widget/atoms/footer.dart';
 import 'package:go_event_id/widget/atoms/search_field.dart';
+import 'package:go_event_id/widget/utils/panara_dialog.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ListAcara extends StatefulWidget {
@@ -35,11 +37,12 @@ class _ListAcaraState extends State<ListAcara> {
                 prefs.clear();
               } else if (state.apiExeception!.statusCode != 500) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            title: Text(state.apiExeception!.message!),
-                          ));
+                  showModernDialog(
+                      context,
+                      "Terjadi Kesalahan!",
+                      state.apiExeception!.message!,
+                      "Mengerti",
+                      PanaraDialogType.error);
                 });
               }
             }

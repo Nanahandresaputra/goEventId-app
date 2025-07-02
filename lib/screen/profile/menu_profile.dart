@@ -7,7 +7,9 @@ import 'package:go_event_id/widget/profile/menu_profile/menu_costumer_care.dart'
 import 'package:go_event_id/widget/profile/menu_profile/menu_edit_akun.dart';
 import 'package:go_event_id/widget/profile/menu_profile/menu_other.dart';
 import 'package:go_event_id/widget/utils/loadin_full_screen.dart';
+import 'package:go_event_id/widget/utils/panara_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuProfile extends StatefulWidget {
@@ -61,11 +63,12 @@ class _MenuProfileState extends State<MenuProfile> {
                 prefs.clear();
               } else {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            title: Text(stateAuth.apiExeception!.message!),
-                          ));
+                  showModernDialog(
+                      context,
+                      "Terjadi Kesalahan!",
+                      stateAuth.apiExeception!.message!,
+                      "Mengerti",
+                      PanaraDialogType.error);
                 });
               }
             } else if (stateAuth is LogoutSuccess) {

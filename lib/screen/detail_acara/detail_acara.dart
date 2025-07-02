@@ -13,6 +13,8 @@ import 'package:go_event_id/widget/detail_acara/detail_description.dart';
 import 'package:go_event_id/widget/detail_acara/detail_ticket.dart';
 import 'package:go_event_id/widget/detail_acara/terms_condition.dart';
 import 'package:go_event_id/widget/execption_message/network_error.dart';
+import 'package:go_event_id/widget/utils/panara_dialog.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailAcara extends StatefulWidget {
@@ -49,12 +51,12 @@ class _DetailAcaraState extends State<DetailAcara> {
                 prefs.clear();
               } else if (stateTiketAcara.apiExeception!.statusCode != 500) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            title:
-                                Text(stateTiketAcara.apiExeception!.message!),
-                          ));
+                  showModernDialog(
+                      context,
+                      "Terjadi Kesalahan!",
+                      stateTiketAcara.apiExeception!.message!,
+                      "Mengerti",
+                      PanaraDialogType.error);
                 });
               }
             }
@@ -71,12 +73,12 @@ class _DetailAcaraState extends State<DetailAcara> {
                     prefs.clear();
                   } else {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: Text(
-                                    statePemesanan.apiExeception!.message!),
-                              ));
+                      showModernDialog(
+                          context,
+                          "Terjadi Kesalahan!",
+                          statePemesanan.apiExeception!.message!,
+                          "Mengerti",
+                          PanaraDialogType.error);
                     });
                   }
                 } else if (statePemesanan is PemesananSuccess) {
@@ -91,6 +93,7 @@ class _DetailAcaraState extends State<DetailAcara> {
                 }
               });
               return Scaffold(
+                backgroundColor: Colors.white,
                 bottomNavigationBar: reqPemesanan['tiket_acara_id'] != null
                     ? Container(
                         padding: const EdgeInsets.all(14),
@@ -162,50 +165,47 @@ class _DetailAcaraState extends State<DetailAcara> {
                           ),
                           SliverList(
                               delegate: SliverChildListDelegate.fixed(<Widget>[
-                            Container(
-                                padding: const EdgeInsets.only(
-                                  top: 20,
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  children: <Widget>[
-                                    DetailDescription(
-                                      kategori: widget.data?.kategori,
-                                      eventName: widget.data?.namaAcara,
-                                      dateEvent: widget.data?.waktuAcara,
-                                      address:
-                                          '${widget.data?.alamat}, ${widget.data?.kabupatenkota.nama}, ${widget.data?.provinsi.nama}',
-                                      mapTicketImg: widget.data?.mapTiketImg,
-                                      description: widget.data?.deskripsi,
-                                    ),
-                                    const SizedBox(
-                                      height: 35,
-                                    ),
-                                    DetailTicket(
-                                      onChange: (tiketAcaraId) {
-                                        setState(() {
-                                          reqPemesanan = {
-                                            "tiket_acara_id": tiketAcaraId,
-                                            "ticketQty": 1
-                                          };
-                                        });
-                                      },
-                                      state: stateTiketAcara,
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    const TermsCondition(),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                  ],
-                                ))
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20, right: 20, left: 20),
+                              child: DetailDescription(
+                                kategori: widget.data?.kategori,
+                                eventName: widget.data?.namaAcara,
+                                dateEvent: widget.data?.waktuAcara,
+                                address:
+                                    '${widget.data?.alamat}, ${widget.data?.kabupatenkota.nama}, ${widget.data?.provinsi.nama}',
+                                mapTicketImg: widget.data?.mapTiketImg,
+                                description: widget.data?.deskripsi,
+                              ),
+                            ),
+                            // const SizedBox(
+                            //   height: 35,
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20, right: 20, left: 20),
+                              child: DetailTicket(
+                                onChange: (tiketAcaraId) {
+                                  setState(() {
+                                    reqPemesanan = {
+                                      "tiket_acara_id": tiketAcaraId,
+                                      "ticketQty": 1
+                                    };
+                                  });
+                                },
+                                state: stateTiketAcara,
+                              ),
+                            ),
+                            // const SizedBox(
+                            //   height: 25,
+                            // ),
+                            const Padding(
+                                padding: EdgeInsets.only(
+                                    top: 20, right: 20, left: 20),
+                                child: TermsCondition()),
+                            const SizedBox(
+                              height: 30,
+                            ),
                           ]))
                         ],
                       ),

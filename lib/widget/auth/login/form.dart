@@ -8,6 +8,8 @@ import 'package:go_event_id/screen/auth/forgot_password.dart';
 import 'package:go_event_id/screen/auth/register.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/atoms/input_field.dart';
+import 'package:go_event_id/widget/utils/panara_dialog.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FormLogin extends StatelessWidget {
@@ -46,13 +48,13 @@ class FormLogin extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const ListAcara()));
         }
         if (state is LoginError) {
-          print('state login error ${state.apiExeception!.statusCode}');
           if (state.apiExeception!.statusCode != 401) {
-            showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                      title: Text(state.apiExeception!.message!),
-                    ));
+            showModernDialog(
+                context,
+                "Terjadi Kesalahan!",
+                state.apiExeception!.message!,
+                "Mengerti",
+                PanaraDialogType.error);
           }
         }
       }
@@ -60,7 +62,7 @@ class FormLogin extends StatelessWidget {
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        WidgetsBinding.instance!.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           loginSubmit(context, state);
         });
         return Padding(
@@ -112,7 +114,7 @@ class FormLogin extends StatelessWidget {
                               'password': passwordController.text,
                             };
 
-                            if ((emailController.text.isNotEmpty ||
+                            if ((emailController.text.isNotEmpty &&
                                     passwordController.text.isNotEmpty) &&
                                 !EmailValidator(value: emailController.text)
                                     .isValid()) {
@@ -154,9 +156,9 @@ class FormLogin extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const Text('Tidak punya akun?'),
-                    const SizedBox(
-                      width: 5,
-                    ),
+                    // const SizedBox(
+                    //   width: 2,
+                    // ),
                     TextButton(
                         onPressed: () {
                           Navigator.push(

@@ -1,60 +1,130 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_event_id/feature/bloc/auth/auth_bloc.dart';
+import 'package:go_event_id/helpers/email_validator.dart';
+import 'package:go_event_id/screen/auth/login.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/atoms/input_field.dart';
+import 'package:go_event_id/widget/utils/panara_dialog.dart';
+import 'package:go_event_id/widget/utils/show_toast.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:toastification/toastification.dart';
 
 class FormRegister extends StatelessWidget {
   const FormRegister({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
+    final formKeyRegister = GlobalKey<FormState>();
 
-    return Padding(
-      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // const SizedBox(
-          //   height: 20,
-          // ),
-          const Text(
-            "Registrasi Akun",
-            style: TextStyle(
-                color: Color(0xFF235146),
-                fontSize: 26,
-                fontWeight: FontWeight.bold),
+    TextEditingController nameController = TextEditingController();
+
+    TextEditingController emailController = TextEditingController();
+
+    TextEditingController passwordController = TextEditingController();
+
+    void registerSubmit(context, state) async {
+      if (emailController.text.isNotEmpty ||
+          passwordController.text.isNotEmpty ||
+          nameController.text.isNotEmpty) {
+        if (state is RegisterSuccess) {
+          showToast(context, 'Success', 'Pendaftaran akun telah berhasil!',
+              ToastificationType.success);
+
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const Login()));
+        }
+        if (state is RegisterError) {
+          showModernDialog(
+              context,
+              "Terjadi Kesalahan!",
+              state.apiExeception!.message!,
+              "Mengerti",
+              PanaraDialogType.error);
+        }
+      }
+    }
+
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          registerSubmit(context, state);
+        });
+        return Padding(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              const Text(
+                "Registrasi Akun",
+                style: TextStyle(
+                    color: Color(0xFF235146),
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Form(
+                  key: formKeyRegister,
+                  child: Column(
+                    children: <Widget>[
+                      InputField(
+                        label: 'Nama',
+                        required: true,
+                        controller: nameController,
+                      ),
+                      InputField(
+                        label: 'Email',
+                        isEmail: true,
+                        required: true,
+                        controller: emailController,
+                      ),
+                      InputField(
+                        label: 'Kata Sandi',
+                        isPassword: true,
+                        required: true,
+                        controller: passwordController,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomElevatedBtn(
+                          isLoading: state is RegisterLoading,
+                          onPressed: () async {
+                            Map<String, String> body = {
+                              'nama': nameController.text,
+                              'email': emailController.text,
+                              'password': passwordController.text,
+                            };
+
+                            if ((emailController.text.isNotEmpty &&
+                                    passwordController.text.isNotEmpty &&
+                                    nameController.text.isNotEmpty) &&
+                                !EmailValidator(value: emailController.text)
+                                    .isValid()) {
+                              context
+                                  .read<AuthBloc>()
+                                  .add(GetRegisterEvent(registerBody: body));
+                              await Future.delayed(const Duration(seconds: 1));
+                            }
+
+                            if (formKeyRegister.currentState != null &&
+                                formKeyRegister.currentState!.validate()) {
+                              return;
+                            }
+                          },
+                          label: 'Daftar')
+                    ],
+                  )),
+            ],
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          Form(
-              key: formKey,
-              child: Column(
-                children: <Widget>[
-                  InputField(
-                    label: 'Nama',
-                  ),
-                  InputField(
-                    label: 'Email',
-                    isEmail: true,
-                  ),
-                  InputField(
-                    label: 'Kata Sandi',
-                    isPassword: true,
-                  ),
-                  InputField(
-                    label: 'Konfirmasi Kata Sandi',
-                    isPassword: true,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomElevatedBtn(onPressed: () {}, label: 'Daftar')
-                ],
-              )),
-        ],
-      ),
+        );
+      },
     );
   }
 }

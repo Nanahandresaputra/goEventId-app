@@ -9,6 +9,8 @@ import 'package:go_event_id/widget/atoms/footer.dart';
 import 'package:go_event_id/widget/execption_message/network_error.dart';
 import 'package:go_event_id/widget/execption_message/no_data.dart';
 import 'package:go_event_id/widget/riwayat/riwayat_transaksi/card_acara_pemesanan.dart';
+import 'package:go_event_id/widget/utils/panara_dialog.dart';
+import 'package:panara_dialogs/panara_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -41,11 +43,12 @@ class _RiwayatTransaksiState extends State<RiwayatTransaksi> {
                 prefs.clear();
               } else if (state.apiExeception!.statusCode != 500) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            title: Text(state.apiExeception!.message!),
-                          ));
+                  showModernDialog(
+                      context,
+                      "Terjadi Kesalahan!",
+                      state.apiExeception!.message!,
+                      "Mengerti",
+                      PanaraDialogType.error);
                 });
               }
             }

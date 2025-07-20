@@ -65,9 +65,9 @@ class _DetailTicketState extends State<DetailTicket> {
                                           .state.tiketAcaraModel.data[index].id
                                   ? const Color(0xFFDBF0DD)
                                   : const Color.fromARGB(12, 0, 0, 0)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
@@ -85,24 +85,31 @@ class _DetailTicketState extends State<DetailTicket> {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  Text(
-                                    '${widget.state.tiketAcaraModel.data[index].tipeTiket}',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        '${widget.state.tiketAcaraModel.data[index].tipeTiket}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16),
+                                      ),
+                                      Text(
+                                        CurrencyFormat.convertToIdr(
+                                            widget.state.tiketAcaraModel
+                                                .data[index].hargaTiket,
+                                            0),
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF173831)),
+                                      )
+                                    ],
                                   )
                                 ],
                               ),
-                              Text(
-                                CurrencyFormat.convertToIdr(
-                                    widget.state.tiketAcaraModel.data[index]
-                                        .hargaTiket,
-                                    0),
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF173831)),
-                              )
                             ],
                           ),
                         ),

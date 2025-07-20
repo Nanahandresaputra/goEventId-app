@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:go_event_id/feature/model/acara_model.dart';
 import 'package:go_event_id/widget/atoms/catetori_tag.dart';
 import 'package:photo_view/photo_view.dart';
@@ -80,10 +81,7 @@ class DetailDescription extends StatelessWidget {
           'Deskripsi',
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
-        Text(
-          "$description",
-          textAlign: TextAlign.justify,
-        ),
+        Html(data: ''' $description '''),
         const SizedBox(
           height: 17,
         ),

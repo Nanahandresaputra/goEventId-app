@@ -7,7 +7,7 @@ class FormForgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
+    final formKeyForgotPw = GlobalKey<FormState>();
 
     return Padding(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
@@ -30,7 +30,7 @@ class FormForgotPassword extends StatelessWidget {
             height: 30,
           ),
           Form(
-              key: formKey,
+              key: formKeyForgotPw,
               child: Column(
                 children: <Widget>[
                   InputField(

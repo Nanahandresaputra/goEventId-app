@@ -37,22 +37,24 @@ class _ListContentState extends State<ListContent> {
   @override
   Widget build(BuildContext context) {
     if (widget.state is AcaraSuccess) {
-      eventData = widget.state.acaraModel.data.where((Datum item) {
-        if (widget.filterCategory != 0 && widget.filterSearch != '') {
-          return item.kategori.id == widget.filterCategory &&
-              item.namaAcara
-                  .toLowerCase()
-                  .contains('${widget.filterSearch}'.toLowerCase());
-        } else if (widget.filterCategory != 0 && widget.filterSearch == '') {
-          return item.kategori.id == widget.filterCategory;
-        } else if (widget.filterCategory == 0 && widget.filterSearch != '') {
-          return item.namaAcara
-              .toLowerCase()
-              .contains('${widget.filterSearch}'.toLowerCase());
-        } else {
-          return true;
-        }
-      }).toList();
+      setState(() {
+        eventData = widget.state.acaraModel.data.where((Datum item) {
+          if (widget.filterCategory != 0 && widget.filterSearch != '') {
+            return item.kategori.id == widget.filterCategory &&
+                item.namaAcara
+                    .toLowerCase()
+                    .contains('${widget.filterSearch}'.toLowerCase());
+          } else if (widget.filterCategory != 0 && widget.filterSearch == '') {
+            return item.kategori.id == widget.filterCategory;
+          } else if (widget.filterCategory == 0 && widget.filterSearch != '') {
+            return item.namaAcara
+                .toLowerCase()
+                .contains('${widget.filterSearch}'.toLowerCase());
+          } else {
+            return true;
+          }
+        }).toList();
+      });
     }
 
     return widget.state is AcaraError &&
@@ -69,9 +71,8 @@ class _ListContentState extends State<ListContent> {
                 // height: MediaQuery.of(context).size.height,
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: widget.state is AcaraSuccess
-                        ? widget.state.acaraModel.data.length
-                        : 7,
+                    itemCount:
+                        widget.state is AcaraSuccess ? eventData.length : 7,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Container(

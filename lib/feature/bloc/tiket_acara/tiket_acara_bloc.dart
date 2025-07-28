@@ -42,7 +42,6 @@ class TiketAcaraBloc extends Bloc<TiketAcaraEvent, TiketAcaraState> {
                   message: RespCode(response.body).message)));
         }
       } catch (e) {
-        print('state is err 3 ===> $e');
         emit(TiketAcaraError(
             apiExeception:
                 ApiExeception(statusCode: 500, message: 'Network Error')));

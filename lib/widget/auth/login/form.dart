@@ -32,7 +32,6 @@ class FormLogin extends StatelessWidget {
         await Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const ListAcara()));
       }
-
       if (emailController.text.isNotEmpty ||
           passwordController.text.isNotEmpty) {
         if (state is LoginSuccess) {

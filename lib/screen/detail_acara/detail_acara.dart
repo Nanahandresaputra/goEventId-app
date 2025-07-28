@@ -82,8 +82,6 @@ class _DetailAcaraState extends State<DetailAcara> {
                     });
                   }
                 } else if (statePemesanan is PemesananSuccess) {
-                  print(
-                      'trigger pemensann success ${statePemesanan.pemesnanModel.data.redirectUrl}');
                   Navigator.push(
                       context,
                       MaterialPageRoute(

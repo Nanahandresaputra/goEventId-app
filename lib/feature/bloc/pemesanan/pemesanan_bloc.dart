@@ -40,15 +40,12 @@ class PemesananBloc extends Bloc<PemesananEvent, PemesananState> {
             emit(PemesananSuccess(
                 pemesnanModel: pemesnanModelFromJson(response.body)));
           } else {
-            print('pemesananErr bloc 0 --> ${response.body}');
             emit(PemesananError(
                 apiExeception: ApiExeception(
                     statusCode: RespCode(response.body).statusCode,
                     message: response.body)));
           }
         } else {
-          print('pemesananErr bloc 1 --> ${response.body}');
-
           emit(PemesananError(
               apiExeception: ApiExeception(
                   statusCode: RespCode(response.body).statusCode,
@@ -79,23 +76,18 @@ class PemesananBloc extends Bloc<PemesananEvent, PemesananState> {
               RespCode(response.body).statusCode == 201) {
             emit(UpdatePemesananSuccess());
           } else {
-            print(' update pemesananErr bloc 0 --> ${response.body}');
             emit(UpdatePemesananError(
                 apiExeception: ApiExeception(
                     statusCode: RespCode(response.body).statusCode,
                     message: response.body)));
           }
         } else {
-          print('update pemesananErr bloc 1 --> ${response.body}');
-
           emit(UpdatePemesananError(
               apiExeception: ApiExeception(
                   statusCode: RespCode(response.body).statusCode,
                   message: response.body)));
         }
       } catch (e) {
-        print('update pemesananErr bloc 1 --> $e');
-
         emit(UpdatePemesananError(
             apiExeception:
                 ApiExeception(statusCode: 500, message: e.toString())));

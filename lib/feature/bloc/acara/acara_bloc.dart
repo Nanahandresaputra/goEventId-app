@@ -18,29 +18,32 @@ class AcaraBloc extends Bloc<AcaraEvent, AcaraState> {
         emit(AcaraLoading());
 
         final getToken = await SharedPreferences.getInstance();
-        final String token = getToken.getString('token') ?? '';
+        final dynamic token = getToken.getString('token');
 
-        final response =
-            await http.get(Uri.parse(apiUrl.acara), headers: {'token': token});
+        await Future.delayed(const Duration(seconds: 1, milliseconds: 30))
+            .then((value) async {
+          final response = await http
+              .get(Uri.parse(apiUrl.acara), headers: {'token': token});
 
-        if (RespCode(response.body).statusCode == 200 ||
-            RespCode(response.body).statusCode == 201) {
           if (RespCode(response.body).statusCode == 200 ||
               RespCode(response.body).statusCode == 201) {
-            emit(AcaraSuccess(
-                acaraModel: listAcaraModelFromJson(response.body)));
+            if (RespCode(response.body).statusCode == 200 ||
+                RespCode(response.body).statusCode == 201) {
+              emit(AcaraSuccess(
+                  acaraModel: listAcaraModelFromJson(response.body)));
+            } else {
+              emit(AcaraError(
+                  apiExeception: ApiExeception(
+                      statusCode: RespCode(response.body).statusCode,
+                      message: RespCode(response.body).message)));
+            }
           } else {
             emit(AcaraError(
                 apiExeception: ApiExeception(
                     statusCode: RespCode(response.body).statusCode,
                     message: RespCode(response.body).message)));
           }
-        } else {
-          emit(AcaraError(
-              apiExeception: ApiExeception(
-                  statusCode: RespCode(response.body).statusCode,
-                  message: RespCode(response.body).message)));
-        }
+        });
       } catch (e) {
         emit(AcaraError(
             apiExeception:

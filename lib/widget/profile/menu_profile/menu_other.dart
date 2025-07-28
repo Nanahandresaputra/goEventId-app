@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_event_id/feature/bloc/auth/auth_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuProfileOther extends StatelessWidget {
   const MenuProfileOther({super.key});
@@ -53,6 +54,9 @@ class MenuProfileOther extends StatelessWidget {
           InkWell(
             onTap: () async {
               context.read<AuthBloc>().add(LogoutEvent());
+
+              final prefs = await SharedPreferences.getInstance();
+              prefs.clear();
 
               await Future.delayed(const Duration(seconds: 1));
             },

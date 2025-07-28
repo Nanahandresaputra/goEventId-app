@@ -25,21 +25,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               RespCode(response.body).statusCode == 201) {
             emit(RegisterSuccess());
           } else {
-            print('reg err 1 --> ${response.body}');
             emit(RegisterError(
                 apiExeception: ApiExeception(
                     statusCode: RespCode(response.body).statusCode,
                     message: response.body)));
           }
         } else {
-          print('reg err 2 --> ${response.body}');
           emit(RegisterError(
               apiExeception: ApiExeception(
                   statusCode: RespCode(response.body).statusCode,
                   message: response.body)));
         }
       } catch (e) {
-        print('reg err 3 --> $e');
         emit(RegisterError(
             apiExeception:
                 ApiExeception(statusCode: 500, message: 'Network Error')));

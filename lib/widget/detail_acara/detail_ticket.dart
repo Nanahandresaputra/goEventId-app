@@ -18,7 +18,6 @@ class _DetailTicketState extends State<DetailTicket> {
 
   @override
   Widget build(BuildContext context) {
-    print('state tiket --> ${widget.state}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -43,8 +42,6 @@ class _DetailTicketState extends State<DetailTicket> {
                               widget.state.tiketAcaraModel.data[index].id;
                           widget.onChange(
                               widget.state.tiketAcaraModel.data[index].id);
-                          print(
-                              'req pemesanan id --> ${widget.state.tiketAcaraModel.data[index].id}');
                         });
                       },
                       child: Skeletonizer(

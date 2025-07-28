@@ -188,8 +188,6 @@ class _PaymentState extends State<Payment> {
                             },
                             onReceivedError:
                                 (controller, request, error) async {
-                              print(
-                                  'webiew error ---> ${error.type} ${error.description} ${request.url}');
                               if (request.url
                                   .toString()
                                   .contains('transaction_status=settlement')) {

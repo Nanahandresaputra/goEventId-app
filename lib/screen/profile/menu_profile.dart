@@ -74,8 +74,6 @@ class _MenuProfileState extends State<MenuProfile> {
             } else if (stateAuth is LogoutSuccess) {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const Login()));
-              final prefs = await SharedPreferences.getInstance();
-              prefs.clear();
             }
           });
           return Scaffold(

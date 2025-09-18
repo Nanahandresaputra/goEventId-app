@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_event_id/feature/model/acara_model.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CategoriesBar extends StatefulWidget {
   final double borderRadius;
@@ -32,15 +33,17 @@ class _CategoriesBarState extends State<CategoriesBar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
+        Text(
           'Kategori',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(
-          height: 5,
+          style: TextStyle(
+              fontSize: ResponsiveBreakpoints.of(context).isTablet ? 25 : 20,
+              fontWeight: FontWeight.w600),
         ),
         SizedBox(
-          height: 73,
+          height: ResponsiveBreakpoints.of(context).isTablet ? 10 : 5,
+        ),
+        SizedBox(
+          height: ResponsiveBreakpoints.of(context).isTablet ? 84 : 73,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: ListView.builder(
@@ -49,7 +52,7 @@ class _CategoriesBarState extends State<CategoriesBar> {
               itemCount: kategoriData.length,
               itemBuilder: (context, index) {
                 return Container(
-                  height: 60,
+                  height: ResponsiveBreakpoints.of(context).isTablet ? 90 : 60,
                   margin: const EdgeInsets.only(right: 8),
                   child: InkWell(
                     onTap: () {
@@ -64,7 +67,8 @@ class _CategoriesBarState extends State<CategoriesBar> {
                       });
                     },
                     child: AnimatedContainer(
-                      height: 60,
+                      height:
+                          ResponsiveBreakpoints.of(context).isTablet ? 90 : 60,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       alignment: Alignment.center,
                       duration: const Duration(milliseconds: 400),
@@ -83,14 +87,21 @@ class _CategoriesBarState extends State<CategoriesBar> {
                           Icon(
                             kategoriData[index]['icon'],
                             color: const Color(0xFF235347),
+                            size: ResponsiveBreakpoints.of(context).isTablet
+                                ? 35
+                                : 20,
                           ),
                           const SizedBox(
                             height: 4,
                           ),
                           Text(
                             '${kategoriData[index]['namaKategori']}',
-                            style: const TextStyle(
-                                fontSize: 14, color: Color(0xFF235347)),
+                            style: TextStyle(
+                                fontSize:
+                                    ResponsiveBreakpoints.of(context).isTablet
+                                        ? 20
+                                        : 14,
+                                color: const Color(0xFF235347)),
                           )
                         ],
                       ),

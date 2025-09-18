@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class SearchInput extends StatelessWidget {
   final TextEditingController textController;
@@ -13,6 +14,8 @@ class SearchInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      style: TextStyle(
+          fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14),
       controller: textController,
       onChanged: (value) {
         //Do something wi
@@ -28,12 +31,16 @@ class SearchInput extends StatelessWidget {
             textController.text = '';
             onChange('');
           },
-          icon: const Icon(Icons.cancel_outlined, color: Color(0xFF235347)),
+          icon: Icon(Icons.cancel_outlined,
+              color: const Color(0xFF235347),
+              size: ResponsiveBreakpoints.of(context).isTablet ? 25 : 18),
         ),
         filled: true,
         fillColor: Colors.white,
         hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.grey),
+        hintStyle: TextStyle(
+            color: Colors.grey,
+            fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: const OutlineInputBorder(

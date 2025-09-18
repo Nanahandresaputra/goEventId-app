@@ -52,19 +52,30 @@ class _ListAcaraState extends State<ListAcara> {
             return Scaffold(
               backgroundColor: Colors.white,
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(
-                    searchVal == '' && scrollVal == 0 ? 230 : 70),
+                preferredSize: Size.fromHeight(searchVal == '' && scrollVal == 0
+                    ? ResponsiveBreakpoints.of(context).isTablet
+                        ? 390
+                        : 230
+                    : ResponsiveBreakpoints.of(context).isTablet
+                        ? 100
+                        : 70),
                 child: AppBar(
                   backgroundColor: Colors.white,
                   flexibleSpace: Container(
                     color: Colors.white,
-                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 50),
                     // color: Colors.green,
-                    height: searchVal == '' && scrollVal == 0 ? 280 : 100,
+                    height: searchVal == '' && scrollVal == 0
+                        ? ResponsiveBreakpoints.of(context).isTablet
+                            ? 420
+                            : 280
+                        : 100,
                     // margin:
                     //     EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.08),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,8 +102,13 @@ class _ListAcaraState extends State<ListAcara> {
                           height: searchVal == '' && scrollVal == 0 ? 18 : 0,
                         ),
                         searchVal == '' && scrollVal == 0
-                            ? const Image(
-                                image: AssetImage('assets/img/banner.png'))
+                            ? Expanded(
+                                child: Image(
+                                  image: AssetImage('assets/img/banner.png'),
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
+                              )
                             : const SizedBox()
                       ],
                     ),
@@ -140,7 +156,9 @@ class _ListAcaraState extends State<ListAcara> {
                           ),
                           SizedBox(
                             height: searchVal == '' && scrollVal == 0
-                                ? MediaQuery.of(context).size.height * 0.5
+                                ? ResponsiveBreakpoints.of(context).isTablet
+                                    ? MediaQuery.of(context).size.height * 0.7
+                                    : MediaQuery.of(context).size.height * 0.5
                                 : MediaQuery.of(context).size.height * 0.75,
                             child: SingleChildScrollView(
                               padding: const EdgeInsets.only(bottom: 100),

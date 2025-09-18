@@ -51,96 +51,94 @@ class _MenuProfileState extends State<MenuProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, stateAuth) {
-          WidgetsBinding.instance.addPostFrameCallback((_) async {
-            if (stateAuth is LogoutError) {
-              if (stateAuth.apiExeception!.statusCode == 401) {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const Login()));
-                final prefs = await SharedPreferences.getInstance();
-                prefs.clear();
-              } else {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showModernDialog(
-                      context,
-                      "Terjadi Kesalahan!",
-                      stateAuth.apiExeception!.message!,
-                      "Mengerti",
-                      PanaraDialogType.error);
-                });
-              }
-            } else if (stateAuth is LogoutSuccess) {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const Login()));
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, stateAuth) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          if (stateAuth is LogoutError) {
+            if (stateAuth.apiExeception!.statusCode == 401) {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Login()));
+              final prefs = await SharedPreferences.getInstance();
+              prefs.clear();
+            } else {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                showModernDialog(
+                    context,
+                    "Terjadi Kesalahan!",
+                    stateAuth.apiExeception!.message!,
+                    "Mengerti",
+                    PanaraDialogType.error);
+              });
             }
-          });
-          return Scaffold(
-              backgroundColor: Colors.white,
-              bottomNavigationBar: const Footer(
-                defaultCurrent: 2,
-              ),
-              body: Stack(
-                children: <Widget>[
-                  CustomScrollView(
-                    slivers: <Widget>[
-                      SliverAppBar(
-                        leadingWidth: double.maxFinite,
-                        toolbarHeight: 120,
-                        leading: Container(
-                          width: double.maxFinite,
-                          padding: const EdgeInsets.all(20),
-                          child: Row(
-                            children: <Widget>[
-                              const ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(100)),
-                                  child: Image(
-                                    image: AssetImage(
-                                        'assets/img/emoji-profile.jpg'),
-                                    fit: BoxFit.contain,
-                                  )),
-                              const SizedBox(
-                                width: 12,
-                              ),
-                              Expanded(
-                                  child: Text(
-                                profileNama,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20),
-                              ))
-                            ],
-                          ),
-                        ),
-                        flexibleSpace: const FlexibleSpaceBar(
-                          background: Image(
-                            image: AssetImage('assets/img/profile-bg.png'),
-                            fit: BoxFit.cover,
-                          ),
+          } else if (stateAuth is LogoutSuccess) {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Login()));
+          }
+        });
+        return Scaffold(
+            backgroundColor: Colors.white,
+            bottomNavigationBar: const Footer(
+              defaultCurrent: 2,
+            ),
+            body: Stack(
+              children: <Widget>[
+                CustomScrollView(
+                  slivers: <Widget>[
+                    SliverAppBar(
+                      leadingWidth: double.maxFinite,
+                      toolbarHeight: 120,
+                      leading: Container(
+                        width: double.maxFinite,
+                        padding: const EdgeInsets.all(20),
+                        child: Row(
+                          children: <Widget>[
+                            const ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                child: Image(
+                                  image: AssetImage(
+                                      'assets/img/emoji-profile.jpg'),
+                                  fit: BoxFit.contain,
+                                )),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Expanded(
+                                child: Text(
+                              profileNama,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20),
+                            ))
+                          ],
                         ),
                       ),
-                      SliverList(
-                          delegate: SliverChildListDelegate.fixed(<Widget>[
-                        const MenuEditAkun(),
-                        const MenuCostumerCare(),
-                        const MenuProfileOther(),
-                        const SizedBox(
-                          height: 50,
+                      flexibleSpace: const FlexibleSpaceBar(
+                        background: Image(
+                          image: AssetImage('assets/img/profile-bg.png'),
+                          fit: BoxFit.cover,
                         ),
-                        Center(
-                          child: Text('Versi ${_packageInfo.version}-Dev'),
-                        )
-                      ]))
-                    ],
-                  ),
-                  if (stateAuth is LogoutLoading) const LoadinFullScreen()
-                ],
-              ));
-        },
-      ),
+                      ),
+                    ),
+                    SliverList(
+                        delegate: SliverChildListDelegate.fixed(<Widget>[
+                      const MenuEditAkun(),
+                      const MenuCostumerCare(),
+                      const MenuProfileOther(),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Center(
+                        child: Text('Versi ${_packageInfo.version}-Dev'),
+                      )
+                    ]))
+                  ],
+                ),
+                if (stateAuth is LogoutLoading) const LoadinFullScreen()
+              ],
+            ));
+      },
     );
   }
 }

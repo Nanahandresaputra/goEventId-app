@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/atoms/input_field.dart';
 
-class FormForgotPassword extends StatelessWidget {
+class FormForgotPassword extends StatefulWidget {
   const FormForgotPassword({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final formKeyForgotPw = GlobalKey<FormState>();
+  State<FormForgotPassword> createState() => _FormForgotPasswordState();
+}
 
+class _FormForgotPasswordState extends State<FormForgotPassword> {
+  final _formKeyForgotPw = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
       child: Column(
@@ -30,7 +35,7 @@ class FormForgotPassword extends StatelessWidget {
             height: 30,
           ),
           Form(
-              key: formKeyForgotPw,
+              key: _formKeyForgotPw,
               child: Column(
                 children: <Widget>[
                   InputField(

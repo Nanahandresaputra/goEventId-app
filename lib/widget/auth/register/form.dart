@@ -8,21 +8,34 @@ import 'package:go_event_id/widget/atoms/input_field.dart';
 import 'package:go_event_id/widget/utils/panara_dialog.dart';
 import 'package:go_event_id/widget/utils/show_toast.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 
-class FormRegister extends StatelessWidget {
-  const FormRegister({super.key});
+class FormRegister extends StatefulWidget {
+  FormRegister({super.key});
+
+  @override
+  State<FormRegister> createState() => _FormRegisterState();
+}
+
+class _FormRegisterState extends State<FormRegister> {
+  final _formKeyRegister = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final formKeyRegister = GlobalKey<FormState>();
-
-    TextEditingController nameController = TextEditingController();
-
-    TextEditingController emailController = TextEditingController();
-
-    TextEditingController passwordController = TextEditingController();
-
     void registerSubmit(context, state) async {
       if (emailController.text.isNotEmpty ||
           passwordController.text.isNotEmpty ||
@@ -32,7 +45,7 @@ class FormRegister extends StatelessWidget {
               ToastificationType.success);
 
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Login()));
+              context, MaterialPageRoute(builder: (context) => Login()));
         }
         if (state is RegisterError) {
           showModernDialog(
@@ -59,18 +72,19 @@ class FormRegister extends StatelessWidget {
               // const SizedBox(
               //   height: 20,
               // ),
-              const Text(
+              Text(
                 "Registrasi Akun",
                 style: TextStyle(
-                    color: Color(0xFF235146),
-                    fontSize: 26,
+                    color: const Color(0xFF235146),
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 36 : 26,
                     fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 30,
               ),
               Form(
-                  key: formKeyRegister,
+                  key: _formKeyRegister,
                   child: Column(
                     children: <Widget>[
                       InputField(
@@ -94,6 +108,9 @@ class FormRegister extends StatelessWidget {
                         height: 20,
                       ),
                       CustomElevatedBtn(
+                          width: ResponsiveBreakpoints.of(context).isTablet
+                              ? MediaQuery.of(context).size.width * 0.9
+                              : 400,
                           isLoading: state is RegisterLoading,
                           onPressed: () async {
                             Map<String, String> body = {
@@ -113,8 +130,8 @@ class FormRegister extends StatelessWidget {
                               await Future.delayed(const Duration(seconds: 1));
                             }
 
-                            if (formKeyRegister.currentState != null &&
-                                formKeyRegister.currentState!.validate()) {
+                            if (_formKeyRegister.currentState != null &&
+                                _formKeyRegister.currentState!.validate()) {
                               return;
                             }
                           },

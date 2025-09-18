@@ -35,160 +35,112 @@ class _PaymentState extends State<Payment> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BlocBuilder<PemesananBloc, PemesananState>(
-        builder: (context, state) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (state is UpdatePemesananSuccess) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const RiwayatTransaksi()));
-            }
-          });
+    return BlocBuilder<PemesananBloc, PemesananState>(
+      builder: (context, state) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (state is UpdatePemesananSuccess) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const RiwayatTransaksi()));
+          }
+        });
 
-          return Scaffold(
-            floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-            // bottomNavigationBar:
-            //     state is PemesananSuccess && _showUpdateStatusBtn
-            //         ? Container(
-            //             padding: const EdgeInsets.only(
-            //                 left: 14, right: 14, bottom: 40, top: 40),
-            //             decoration: const BoxDecoration(
-            //                 color: Colors.white,
-            //                 boxShadow: <BoxShadow>[
-            //                   BoxShadow(
-            //                       color: Colors.black,
-            //                       offset: Offset(0, 6),
-            //                       blurRadius: 10)
-            //                 ]),
-            //             child: CustomElevatedBtn(
-            //               isLoading: state is PemesananLoading,
-            //               onPressed: () async {
-            //                 context.read<PemesananBloc>().add(
-            //                         UpdatePemesananEvent(updatePemesananBody: {
-            //                       "kode_pemesanan":
-            //                           state.pemesnanModel.data.kodePemesanan
-            //                     }));
-            //                 await Future.delayed(const Duration(seconds: 1));
-            //               },
-            //               label: 'Lihat Riwayat Pemesanan',
-            //             ),
-            //           )
-            //         : const SizedBox(),
-            body: Container(
-                padding: const EdgeInsets.only(top: 50),
-                color: _isLoading || !_isConnect
-                    ? Colors.white
-                    : const Color(0xFF235347),
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: <Widget>[
-                    if (_isLoading)
-                      const Center(
-                        child: SizedBox(
-                            width: 200,
-                            height: 200,
-                            child: Image(
-                                image: AssetImage(
-                                    'assets/img/loading-animate.gif'))),
-                      ),
-                    !_isConnect && !_isLoading
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              NetworkError(
-                                onReload: () async {
-                                  bool result = await InternetConnection()
-                                      .hasInternetAccess;
+        return Scaffold(
+          floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+          // bottomNavigationBar:
+          //     state is PemesananSuccess && _showUpdateStatusBtn
+          //         ? Container(
+          //             padding: const EdgeInsets.only(
+          //                 left: 14, right: 14, bottom: 40, top: 40),
+          //             decoration: const BoxDecoration(
+          //                 color: Colors.white,
+          //                 boxShadow: <BoxShadow>[
+          //                   BoxShadow(
+          //                       color: Colors.black,
+          //                       offset: Offset(0, 6),
+          //                       blurRadius: 10)
+          //                 ]),
+          //             child: CustomElevatedBtn(
+          //               isLoading: state is PemesananLoading,
+          //               onPressed: () async {
+          //                 context.read<PemesananBloc>().add(
+          //                         UpdatePemesananEvent(updatePemesananBody: {
+          //                       "kode_pemesanan":
+          //                           state.pemesnanModel.data.kodePemesanan
+          //                     }));
+          //                 await Future.delayed(const Duration(seconds: 1));
+          //               },
+          //               label: 'Lihat Riwayat Pemesanan',
+          //             ),
+          //           )
+          //         : const SizedBox(),
+          body: Container(
+              padding: const EdgeInsets.only(top: 50),
+              color: _isLoading || !_isConnect
+                  ? Colors.white
+                  : const Color(0xFF235347),
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
+                children: <Widget>[
+                  if (_isLoading)
+                    const Center(
+                      child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: Image(
+                              image: AssetImage(
+                                  'assets/img/loading-animate.gif'))),
+                    ),
+                  !_isConnect && !_isLoading
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            NetworkError(
+                              onReload: () async {
+                                bool result = await InternetConnection()
+                                    .hasInternetAccess;
 
-                                  setState(() {
-                                    _isConnect = result;
-                                    _isLoading = true;
-                                  });
-                                },
-                              )
-                            ],
-                          )
-                        : InAppWebView(
-                            key: webViewKey,
-                            initialUrlRequest: URLRequest(
-                              url: WebUri(widget.snapMidtransUrl ??
-                                  'http://example.com/error'),
-                            ),
-                            onProgressChanged: (controller, progress) async {
-                              bool result =
-                                  await InternetConnection().hasInternetAccess;
-                              if (progress >= 100) {
                                 setState(() {
-                                  _isLoading = false;
                                   _isConnect = result;
+                                  _isLoading = true;
                                 });
-                              }
-                            },
-                            initialSettings:
-                                InAppWebViewSettings(clearCache: true),
-                            onLoadStart: (controller, resource) async {
-                              bool result =
-                                  await InternetConnection().hasInternetAccess;
-
+                              },
+                            )
+                          ],
+                        )
+                      : InAppWebView(
+                          key: webViewKey,
+                          initialUrlRequest: URLRequest(
+                            url: WebUri(widget.snapMidtransUrl ??
+                                'http://example.com/error'),
+                          ),
+                          onProgressChanged: (controller, progress) async {
+                            bool result =
+                                await InternetConnection().hasInternetAccess;
+                            if (progress >= 100) {
                               setState(() {
+                                _isLoading = false;
                                 _isConnect = result;
-                                _isLoading = true;
                               });
-                            },
-                            onUpdateVisitedHistory:
-                                (controller, url, isReload) async {
-                              if (url.toString().contains('/success')) {
-                                if (url.toString().contains(
-                                    'transaction_status=settlement')) {
-                                  if (_webViewController != null) {
-                                    _webViewController!.loadUrl(
-                                        urlRequest: URLRequest(
-                                            url: WebUri(widget
-                                                    .snapMidtransUrl ??
-                                                'http://example.com/error')));
-                                  }
+                            }
+                          },
+                          initialSettings:
+                              InAppWebViewSettings(clearCache: true),
+                          onLoadStart: (controller, resource) async {
+                            bool result =
+                                await InternetConnection().hasInternetAccess;
 
-                                  setState(() {
-                                    _showUpdateStatusBtn = true;
-                                  });
-
-                                  // if (state is PemesananSuccess) {
-                                  // context.read<PemesananBloc>().add(
-                                  //         UpdatePemesananEvent(
-                                  //             updatePemesananBody: {
-                                  //           "kode_pemesanan": state
-                                  //               .pemesnanModel
-                                  //               .data
-                                  //               .kodePemesanan
-                                  //         }));
-                                  // await Future.delayed(
-                                  //     const Duration(seconds: 1));
-                                  // }
-                                } else if (url.toString().contains(
-                                    'transaction_status=pending&action=back')) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ListAcara()));
-                                }
-                              } else if (url.toString().contains('/error')) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ListAcara()));
-                              }
-                            },
-                            onWebViewCreated: (controller) {
-                              _webViewController = controller;
-                            },
-                            onReceivedError:
-                                (controller, request, error) async {
-                              if (request.url
+                            setState(() {
+                              _isConnect = result;
+                              _isLoading = true;
+                            });
+                          },
+                          onUpdateVisitedHistory:
+                              (controller, url, isReload) async {
+                            if (url.toString().contains('/success')) {
+                              if (url
                                   .toString()
                                   .contains('transaction_status=settlement')) {
                                 if (_webViewController != null) {
@@ -197,80 +149,122 @@ class _PaymentState extends State<Payment> {
                                           url: WebUri(widget.snapMidtransUrl ??
                                               'http://example.com/error')));
                                 }
-                              } else {
+
                                 setState(() {
-                                  _isConnect = false;
-                                  _isLoading = false;
+                                  _showUpdateStatusBtn = true;
                                 });
+
+                                // if (state is PemesananSuccess) {
+                                // context.read<PemesananBloc>().add(
+                                //         UpdatePemesananEvent(
+                                //             updatePemesananBody: {
+                                //           "kode_pemesanan": state
+                                //               .pemesnanModel
+                                //               .data
+                                //               .kodePemesanan
+                                //         }));
+                                // await Future.delayed(
+                                //     const Duration(seconds: 1));
+                                // }
+                              } else if (url.toString().contains(
+                                  'transaction_status=pending&action=back')) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ListAcara()));
                               }
-                            },
-                            onReceivedServerTrustAuthRequest:
-                                (controller, challenge) async {
-                              return ServerTrustAuthResponse(
-                                  action:
-                                      ServerTrustAuthResponseAction.PROCEED);
-                            },
-                            onPermissionRequest:
-                                (controller, permissionRequest) async {
-                              return PermissionResponse(
-                                resources: permissionRequest.resources,
-                                action: PermissionResponseAction.GRANT,
-                              );
-                            },
-                            shouldOverrideUrlLoading:
-                                (controller, navigationAction) async {
-                              var uri = navigationAction.request.url!;
-                              if (![
-                                "http",
-                                "https",
-                                "file",
-                                "chrome",
-                                "data",
-                                "javascript",
-                                "about"
-                              ].contains(uri.scheme)) {
-                                if (await canLaunchUrl(uri)) {
-                                  await launchUrl(uri);
-                                  return NavigationActionPolicy.CANCEL;
-                                }
+                            } else if (url.toString().contains('/error')) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const ListAcara()));
+                            }
+                          },
+                          onWebViewCreated: (controller) {
+                            _webViewController = controller;
+                          },
+                          onReceivedError: (controller, request, error) async {
+                            if (request.url
+                                .toString()
+                                .contains('transaction_status=settlement')) {
+                              if (_webViewController != null) {
+                                _webViewController!.loadUrl(
+                                    urlRequest: URLRequest(
+                                        url: WebUri(widget.snapMidtransUrl ??
+                                            'http://example.com/error')));
                               }
-                              return NavigationActionPolicy.ALLOW;
-                            }),
-                    if (state is PemesananSuccess && _showUpdateStatusBtn)
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          width: double.maxFinite,
-                          padding: const EdgeInsets.only(
-                              left: 14, right: 14, bottom: 40, top: 40),
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.black,
-                                    offset: Offset(0, 6),
-                                    blurRadius: 10)
-                              ]),
-                          child: CustomElevatedBtn(
-                            isLoading: state is UpdatePemesananLoading,
-                            onPressed: () async {
-                              context.read<PemesananBloc>().add(
-                                      UpdatePemesananEvent(
-                                          updatePemesananBody: {
-                                        "kode_pemesanan": state
-                                            .pemesnanModel.data.kodePemesanan
-                                      }));
-                              await Future.delayed(const Duration(seconds: 1));
-                            },
-                            label: 'Lihat Riwayat Pemesanan',
-                          ),
+                            } else {
+                              setState(() {
+                                _isConnect = false;
+                                _isLoading = false;
+                              });
+                            }
+                          },
+                          onReceivedServerTrustAuthRequest:
+                              (controller, challenge) async {
+                            return ServerTrustAuthResponse(
+                                action: ServerTrustAuthResponseAction.PROCEED);
+                          },
+                          onPermissionRequest:
+                              (controller, permissionRequest) async {
+                            return PermissionResponse(
+                              resources: permissionRequest.resources,
+                              action: PermissionResponseAction.GRANT,
+                            );
+                          },
+                          shouldOverrideUrlLoading:
+                              (controller, navigationAction) async {
+                            var uri = navigationAction.request.url!;
+                            if (![
+                              "http",
+                              "https",
+                              "file",
+                              "chrome",
+                              "data",
+                              "javascript",
+                              "about"
+                            ].contains(uri.scheme)) {
+                              if (await canLaunchUrl(uri)) {
+                                await launchUrl(uri);
+                                return NavigationActionPolicy.CANCEL;
+                              }
+                            }
+                            return NavigationActionPolicy.ALLOW;
+                          }),
+                  if (state is PemesananSuccess && _showUpdateStatusBtn)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: double.maxFinite,
+                        padding: const EdgeInsets.only(
+                            left: 14, right: 14, bottom: 40, top: 40),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.black,
+                                  offset: Offset(0, 6),
+                                  blurRadius: 10)
+                            ]),
+                        child: CustomElevatedBtn(
+                          isLoading: state is UpdatePemesananLoading,
+                          onPressed: () async {
+                            context.read<PemesananBloc>().add(
+                                    UpdatePemesananEvent(updatePemesananBody: {
+                                  "kode_pemesanan":
+                                      state.pemesnanModel.data.kodePemesanan
+                                }));
+                            await Future.delayed(const Duration(seconds: 1));
+                          },
+                          label: 'Lihat Riwayat Pemesanan',
                         ),
                       ),
-                  ],
-                )),
-          );
-        },
-      ),
+                    ),
+                ],
+              )),
+        );
+      },
     );
   }
 }

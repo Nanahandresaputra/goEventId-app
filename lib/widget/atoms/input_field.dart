@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_event_id/helpers/email_validator.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class InputField extends StatefulWidget {
   final TextEditingController? controller;
@@ -62,6 +63,8 @@ class _InputFieldState extends State<InputField> {
       height: widget.height,
       margin: const EdgeInsets.only(bottom: 17),
       child: TextFormField(
+        style: TextStyle(
+            fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14),
         controller: widget.controller,
         obscureText: widget.isPassword ?? false ? !pwdVisibility : false,
         keyboardType: widget.keyboardType,
@@ -78,20 +81,34 @@ class _InputFieldState extends State<InputField> {
                         pwdVisibility = !pwdVisibility;
                       })
                     },
-                    child: Icon(pwdVisibility
-                        ? Icons.visibility
-                        : Icons.visibility_off),
+                    child: Icon(
+                      pwdVisibility ? Icons.visibility : Icons.visibility_off,
+                      size:
+                          ResponsiveBreakpoints.of(context).isTablet ? 25 : 18,
+                    ),
                   )
                 : null,
             labelText: widget.label,
             hintText: 'Masukan ${widget.label}',
-            labelStyle: const TextStyle(fontSize: 14),
-            errorStyle: const TextStyle(color: Colors.red),
+            hintStyle: TextStyle(
+                fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14),
+            labelStyle: TextStyle(
+              fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14,
+            ),
+            errorStyle: TextStyle(
+                color: Colors.red,
+                fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14),
             floatingLabelStyle: WidgetStateTextStyle.resolveWith((state) {
               if (state.contains(WidgetState.focused)) {
-                return TextStyle(color: labelColor);
+                return TextStyle(
+                    color: labelColor,
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 20 : 14);
               } else {
-                return const TextStyle(color: Colors.black54);
+                return TextStyle(
+                    color: Colors.black54,
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 20 : 14);
               }
             }),
             enabledBorder: OutlineInputBorder(

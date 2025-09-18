@@ -10,19 +10,32 @@ import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/atoms/input_field.dart';
 import 'package:go_event_id/widget/utils/panara_dialog.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FormLogin extends StatelessWidget {
+class FormLogin extends StatefulWidget {
   const FormLogin({super.key});
 
   @override
+  State<FormLogin> createState() => _FormLoginState();
+}
+
+class _FormLoginState extends State<FormLogin> {
+  final _formKey = GlobalKey<FormState>();
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-
-    TextEditingController emailController = TextEditingController();
-
-    TextEditingController passwordController = TextEditingController();
-
     void loginSubmit(context, state) async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -73,18 +86,19 @@ class FormLogin extends StatelessWidget {
               // const SizedBox(
               //   height: 20,
               // ),
-              const Text(
+              Text(
                 "Login",
                 style: TextStyle(
-                    color: Color(0xFF235146),
-                    fontSize: 26,
+                    color: const Color(0xFF235146),
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 36 : 26,
                     fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: ResponsiveBreakpoints.of(context).isTablet ? 40 : 30,
               ),
               Form(
-                  key: formKey,
+                  key: _formKey,
                   child: Column(
                     children: <Widget>[
                       InputField(
@@ -102,10 +116,15 @@ class FormLogin extends StatelessWidget {
                         errorValidation: state is LoginError,
                         errorValidationText: 'Email atau Password salah!',
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: ResponsiveBreakpoints.of(context).isTablet
+                            ? 30
+                            : 20,
                       ),
                       CustomElevatedBtn(
+                          width: ResponsiveBreakpoints.of(context).isTablet
+                              ? MediaQuery.of(context).size.width * 0.9
+                              : 400,
                           isLoading: state is LoginLoading,
                           onPressed: () async {
                             Map<String, String> body = {
@@ -123,53 +142,71 @@ class FormLogin extends StatelessWidget {
                               await Future.delayed(const Duration(seconds: 1));
                             }
 
-                            if (formKey.currentState != null &&
-                                formKey.currentState!.validate()) {
+                            if (_formKey.currentState != null &&
+                                _formKey.currentState!.validate()) {
                               return;
                             }
                           },
                           label: 'Login')
                     ],
                   )),
+              SizedBox(
+                height: ResponsiveBreakpoints.of(context).isTablet ? 10 : 5,
+              ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ForgotPassword()));
+                            builder: (context) => ForgotPassword()));
                   },
-                  child: const Text(
+                  child: Text(
                     'Lupa kata sandi',
-                    style: TextStyle(color: Color(0xFF235146)),
+                    style: TextStyle(
+                        color: const Color(0xFF235146),
+                        fontSize: ResponsiveBreakpoints.of(context).isTablet
+                            ? 20
+                            : 14),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 50,
+              SizedBox(
+                height: ResponsiveBreakpoints.of(context).isTablet ? 65 : 50,
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text('Tidak punya akun?'),
+                    Text(
+                      'Tidak punya akun?',
+                      style: TextStyle(
+                          fontSize: ResponsiveBreakpoints.of(context).isTablet
+                              ? 20
+                              : 14),
+                    ),
                     // const SizedBox(
                     //   width: 2,
                     // ),
+
                     TextButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Register()));
+                                  builder: (context) => Register()));
                         },
-                        child: const Text(
+                        child: Text(
                           'Daftar',
                           style: TextStyle(
-                              color: Color(0xFF235146),
-                              fontWeight: FontWeight.bold),
+                              color: const Color(0xFF235146),
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 20
+                                      : 14),
                         )),
                   ],
                 ),

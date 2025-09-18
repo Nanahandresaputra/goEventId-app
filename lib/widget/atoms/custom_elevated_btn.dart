@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CustomElevatedBtn extends StatelessWidget {
   final Function()? onPressed;
@@ -38,8 +39,12 @@ class CustomElevatedBtn extends StatelessWidget {
               : label != null
                   ? Text(
                       '$label',
-                      style: const TextStyle(
-                          color: Colors.white, fontSize: 16, height: 3),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: ResponsiveBreakpoints.of(context).isTablet
+                              ? 20
+                              : 16,
+                          height: 3),
                     )
                   : icon),
     );

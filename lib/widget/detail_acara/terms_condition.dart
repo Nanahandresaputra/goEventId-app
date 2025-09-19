@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_event_id/widget/detail_acara/terms_conditon_data.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class TermsCondition extends StatelessWidget {
   const TermsCondition({super.key});
@@ -9,9 +10,11 @@ class TermsCondition extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
+        Text(
           'Syarat & Ketentuan Umum GoEventID',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 16),
         ),
         const SizedBox(
           height: 10,
@@ -20,11 +23,22 @@ class TermsCondition extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('${index + 1}.'),
+              Text(
+                '${index + 1}.',
+                style: TextStyle(
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 20 : 14),
+              ),
               const SizedBox(
                 width: 6,
               ),
-              Expanded(child: Text(termsConditionEvent[index]))
+              Expanded(
+                  child: Text(
+                termsConditionEvent[index],
+                style: TextStyle(
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 20 : 14),
+              ))
             ],
           )
       ],

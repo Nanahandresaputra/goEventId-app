@@ -5,6 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:go_event_id/feature/model/acara_model.dart';
 import 'package:go_event_id/widget/atoms/catetori_tag.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class DetailDescription extends StatelessWidget {
   final String? dateEvent;
@@ -32,8 +33,8 @@ class DetailDescription extends StatelessWidget {
         ),
         Text(
           '$eventName',
-          style: const TextStyle(
-            fontSize: 20,
+          style: TextStyle(
+            fontSize: ResponsiveBreakpoints.of(context).isTablet ? 30 : 20,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -42,27 +43,30 @@ class DetailDescription extends StatelessWidget {
         ),
         Row(
           children: <Widget>[
-            const Icon(
+            Icon(
               Icons.date_range_outlined,
               color: Colors.black38,
-              size: 20,
+              size: ResponsiveBreakpoints.of(context).isTablet ? 30 : 20,
             ),
             const SizedBox(
               width: 5,
             ),
             Text(
               '$dateEvent',
-              style: TextStyle(color: Colors.black38),
+              style: TextStyle(
+                  color: Colors.black38,
+                  fontSize:
+                      ResponsiveBreakpoints.of(context).isTablet ? 16 : 12),
             )
           ],
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Icon(
+            Icon(
               Icons.location_on_sharp,
               color: Colors.black38,
-              size: 20,
+              size: ResponsiveBreakpoints.of(context).isTablet ? 30 : 20,
             ),
             const SizedBox(
               width: 5,
@@ -70,24 +74,37 @@ class DetailDescription extends StatelessWidget {
             Expanded(
                 child: Text(
               '$address',
-              style: const TextStyle(color: Colors.black38),
+              style: TextStyle(
+                  color: Colors.black38,
+                  fontSize:
+                      ResponsiveBreakpoints.of(context).isTablet ? 16 : 12),
             )),
           ],
         ),
         const SizedBox(
           height: 17,
         ),
-        const Text(
+        Text(
           'Deskripsi',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 16),
         ),
-        Html(data: ''' $description '''),
+        Html(
+          data: ''' $description ''',
+          style: {
+            'p': Style(
+                fontSize: ResponsiveBreakpoints.of(context).isTablet
+                    ? FontSize.larger
+                    : FontSize.medium)
+          },
+        ),
         const SizedBox(
           height: 17,
         ),
         // Image(image: AssetImage('assets/img/map-ticket-dummy.png'))
         SizedBox(
-            height: 300,
+            height: ResponsiveBreakpoints.of(context).isTablet ? 400 : 300,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: PhotoView(

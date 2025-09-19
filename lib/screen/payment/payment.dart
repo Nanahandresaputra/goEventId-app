@@ -9,6 +9,7 @@ import 'package:go_event_id/screen/riwayat/riwayat_transaksi.dart';
 import 'package:go_event_id/widget/atoms/custom_elevated_btn.dart';
 import 'package:go_event_id/widget/execption_message/network_error.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Payment extends StatefulWidget {
@@ -126,8 +127,9 @@ class _PaymentState extends State<Payment> {
                               });
                             }
                           },
-                          initialSettings:
-                              InAppWebViewSettings(clearCache: true),
+                          initialSettings: InAppWebViewSettings(
+                            clearCache: true,
+                          ),
                           onLoadStart: (controller, resource) async {
                             bool result =
                                 await InternetConnection().hasInternetAccess;
@@ -237,16 +239,23 @@ class _PaymentState extends State<Payment> {
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         width: double.maxFinite,
-                        padding: const EdgeInsets.only(
-                            left: 14, right: 14, bottom: 40, top: 40),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: Colors.black,
-                                  offset: Offset(0, 6),
-                                  blurRadius: 10)
-                            ]),
+                        padding: EdgeInsets.only(
+                            left: 14,
+                            right: 14,
+                            bottom: 40,
+                            top: ResponsiveBreakpoints.of(context).isTablet
+                                ? 400
+                                : 40),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: ResponsiveBreakpoints.of(context).isTablet
+                              ? const DecorationImage(
+                                  image:
+                                      AssetImage('assets/img/bg-payment.jpg'),
+                                  repeat: ImageRepeat.repeat,
+                                )
+                              : null,
+                        ),
                         child: CustomElevatedBtn(
                           isLoading: state is UpdatePemesananLoading,
                           onPressed: () async {

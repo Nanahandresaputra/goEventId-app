@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class MenuEditAkun extends StatelessWidget {
   const MenuEditAkun({super.key});
@@ -18,14 +19,16 @@ class MenuEditAkun extends StatelessWidget {
       //     border: Border(
       //         bottom: BorderSide(color: Color(0xFF4E4F54)),
       //         top: BorderSide(color: Color(0xFF4E4F54), width: 0.5))),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             'Akun',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: TextStyle(
+                fontSize: ResponsiveBreakpoints.of(context).isTablet ? 28 : 20,
+                fontWeight: FontWeight.w600),
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           Row(
@@ -37,22 +40,25 @@ class MenuEditAkun extends StatelessWidget {
                 children: <Widget>[
                   Icon(
                     CupertinoIcons.profile_circled,
-                    color: Color(0xFF4E4F54),
-                    size: 26,
+                    color: const Color(0xFF4E4F54),
+                    size: ResponsiveBreakpoints.of(context).isTablet ? 36 : 26,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
                     'Edit Akun',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                        fontSize: ResponsiveBreakpoints.of(context).isTablet
+                            ? 24
+                            : 18),
                   )
                 ],
               ),
               Icon(
                 Icons.keyboard_arrow_right_outlined,
-                color: Color(0xFF4E4F54),
-                size: 35,
+                color: const Color(0xFF4E4F54),
+                size: ResponsiveBreakpoints.of(context).isTablet ? 43 : 35,
               )
             ],
           ),

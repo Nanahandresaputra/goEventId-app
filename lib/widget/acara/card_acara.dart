@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:go_event_id/feature/model/acara_model.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CardAcara extends StatelessWidget {
   final Datum? data;
@@ -31,15 +31,17 @@ class CardAcara extends StatelessWidget {
             ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: Image(
-                  fit: BoxFit.cover,
-                  image: data?.bannerImg is String
-                      ? MemoryImage(base64Decode(data!.bannerImg))
-                      : const AssetImage('assets/img/event-banner-dummy.png'),
-                  height: 120,
-                  width: 400,
-                  // height: 80,
-                  // width: 80,
-                )),
+                    fit: BoxFit.cover,
+                    image: data?.bannerImg is String
+                        ? MemoryImage(base64Decode(data!.bannerImg))
+                        : const AssetImage('assets/img/event-banner-dummy.png'),
+                    height:
+                        ResponsiveBreakpoints.of(context).isTablet ? 200 : 120,
+                    width: double.infinity
+                    // : 400,
+                    // height: 80,
+                    // width: 80,
+                    )),
             const SizedBox(
               height: 12,
             ),
@@ -51,9 +53,10 @@ class CardAcara extends StatelessWidget {
                   maxLines: 2,
                   '${data?.namaAcara}',
                   // softWrap: false,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize:
+                          ResponsiveBreakpoints.of(context).isTablet ? 24 : 16,
                       overflow: TextOverflow.ellipsis),
                 ),
                 const SizedBox(
@@ -61,14 +64,20 @@ class CardAcara extends StatelessWidget {
                 ),
                 Text(
                   '${data?.waktuAcara}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500, color: Colors.black38),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black38,
+                      fontSize:
+                          ResponsiveBreakpoints.of(context).isTablet ? 20 : 12),
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   '${data?.kabupatenkota.nama}, ${data?.provinsi.nama}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500, color: Colors.black38),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black38,
+                      fontSize:
+                          ResponsiveBreakpoints.of(context).isTablet ? 20 : 12),
                   overflow: TextOverflow.ellipsis,
                 )
               ],

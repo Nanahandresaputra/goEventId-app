@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_event_id/feature/model/acara_model.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CategoriTag extends StatelessWidget {
   final Kategori? kategori;
@@ -30,11 +31,14 @@ class CategoriTag extends StatelessWidget {
                               ? Icons.festival_rounded
                               : Icons.not_interested_sharp,
               color: const Color(0xFF235347),
-              size: 20,
+              size: ResponsiveBreakpoints.of(context).isTablet ? 30 : 20,
             ),
             Text(
               '${kategori?.namaKategori}',
-              style: const TextStyle(color: Color(0xFF235347), fontSize: 14),
+              style: TextStyle(
+                  color: const Color(0xFF235347),
+                  fontSize:
+                      ResponsiveBreakpoints.of(context).isTablet ? 18 : 14),
             )
           ],
         ),

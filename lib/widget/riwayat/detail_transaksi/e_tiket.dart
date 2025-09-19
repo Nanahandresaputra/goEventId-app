@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class ETiket extends StatelessWidget {
   final dynamic data;
@@ -29,7 +30,7 @@ class ETiket extends StatelessWidget {
                 image: data?.bannerImg is String
                     ? MemoryImage(base64Decode(data!.bannerImg))
                     : const AssetImage('assets/img/event-banner-dummy.png'),
-                height: 85,
+                height: ResponsiveBreakpoints.of(context).isTablet ? 200 : 85,
                 width: double.maxFinite,
               )),
           Padding(
@@ -39,8 +40,18 @@ class ETiket extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Text('Kode Booking'),
-                    Text('${data?.kodeOrder}'),
+                    Text(
+                      'Kode Booking',
+                      style: TextStyle(
+                          fontSize: ResponsiveBreakpoints.of(context).isTablet
+                              ? 18
+                              : 14),
+                    ),
+                    Text('${data?.kodeOrder}',
+                        style: TextStyle(
+                            fontSize: ResponsiveBreakpoints.of(context).isTablet
+                                ? 18
+                                : 14)),
                   ],
                 ),
                 const SizedBox(
@@ -58,9 +69,10 @@ class ETiket extends StatelessWidget {
                   '${data?.acara}',
                   softWrap: true,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 18,
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 24 : 18,
                   ),
                 ),
                 const SizedBox(
@@ -83,11 +95,15 @@ class ETiket extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      const Expanded(
+                      Expanded(
                         child: Text(
                           "Tiket",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 20
+                                      : 16,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                       Expanded(
@@ -95,8 +111,12 @@ class ETiket extends StatelessWidget {
                         child: Text(
                           '${data?.tipeTiket}',
                           textAlign: TextAlign.end,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 20
+                                      : 16,
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],
@@ -111,19 +131,27 @@ class ETiket extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      const Expanded(
+                      Expanded(
                         child: Text(
                           "Waktu",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 20
+                                      : 16,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           '${data?.waktuAcara}',
                           textAlign: TextAlign.end,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 20
+                                      : 16,
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],
@@ -139,11 +167,15 @@ class ETiket extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      const Expanded(
+                      Expanded(
                         child: Text(
                           "Tempat",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 20
+                                      : 16,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                       Expanded(
@@ -151,8 +183,12 @@ class ETiket extends StatelessWidget {
                         child: Text(
                           '${data?.tempatAcara}',
                           textAlign: TextAlign.end,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 20
+                                      : 16,
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],

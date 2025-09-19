@@ -10,6 +10,7 @@ import 'package:go_event_id/widget/execption_message/no_data.dart';
 import 'package:go_event_id/widget/riwayat/riwayat_transaksi/card_acara_pemesanan.dart';
 import 'package:go_event_id/widget/utils/panara_dialog.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -56,11 +57,12 @@ class _RiwayatTransaksiState extends State<RiwayatTransaksi> {
           appBar: AppBar(
               backgroundColor: const Color(0xFF235347),
               centerTitle: true,
-              title: const Text(
+              title: Text(
                 'Riwayat Pemesanan',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize:
+                        ResponsiveBreakpoints.of(context).isTablet ? 28 : 18,
                     fontWeight: FontWeight.w500),
               ),
               elevation: 8,
@@ -73,10 +75,10 @@ class _RiwayatTransaksiState extends State<RiwayatTransaksi> {
                         MaterialPageRoute(
                             builder: (context) => const ListAcara()));
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     CupertinoIcons.arrow_left,
                     color: Colors.white,
-                    size: 25,
+                    size: ResponsiveBreakpoints.of(context).isTablet ? 36 : 25,
                   ),
                 ),
               )),

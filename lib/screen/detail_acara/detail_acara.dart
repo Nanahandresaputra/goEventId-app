@@ -15,6 +15,7 @@ import 'package:go_event_id/widget/detail_acara/terms_condition.dart';
 import 'package:go_event_id/widget/execption_message/network_error.dart';
 import 'package:go_event_id/widget/utils/panara_dialog.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailAcara extends StatefulWidget {
@@ -127,7 +128,10 @@ class _DetailAcaraState extends State<DetailAcara> {
                       slivers: <Widget>[
                         SliverAppBar(
                           foregroundColor: Colors.green.shade800,
-                          toolbarHeight: 200,
+                          toolbarHeight:
+                              ResponsiveBreakpoints.of(context).isTablet
+                                  ? 300
+                                  : 200,
                           leading: Align(
                             alignment: Alignment.topLeft,
                             child: IconButton(
@@ -142,6 +146,10 @@ class _DetailAcaraState extends State<DetailAcara> {
                                 Icons.arrow_back_outlined,
                               ),
                               style: IconButton.styleFrom(
+                                  iconSize:
+                                      ResponsiveBreakpoints.of(context).isTablet
+                                          ? 34
+                                          : 22,
                                   backgroundColor:
                                       const Color.fromARGB(167, 255, 255, 255)),
                             ),

@@ -7,6 +7,7 @@ import 'package:go_event_id/screen/detail_acara/detail_acara.dart';
 import 'package:go_event_id/widget/acara/card_acara.dart';
 import 'package:go_event_id/widget/execption_message/network_error.dart';
 import 'package:go_event_id/widget/execption_message/no_data.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ListContent extends StatefulWidget {
@@ -76,7 +77,10 @@ class _ListContentState extends State<ListContent> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Container(
-                        margin: const EdgeInsets.only(bottom: 15),
+                        margin: EdgeInsets.only(
+                            bottom: ResponsiveBreakpoints.of(context).isTablet
+                                ? 25
+                                : 15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             border:

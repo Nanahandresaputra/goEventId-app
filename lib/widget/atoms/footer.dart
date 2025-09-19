@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_event_id/screen/acara/list_acara.dart';
 import 'package:go_event_id/screen/profile/menu_profile.dart';
 import 'package:go_event_id/screen/riwayat/riwayat_transaksi.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class Footer extends StatefulWidget {
   final Function()? onTap;
@@ -21,11 +22,15 @@ class _FooterState extends State<Footer> {
         boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8)],
       ),
       child: BottomNavigationBar(
-        iconSize: 30,
-        selectedLabelStyle:
-            const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        unselectedLabelStyle:
-            const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        iconSize: ResponsiveBreakpoints.of(context).isTablet ? 42 : 30,
+        selectedLabelStyle: TextStyle(
+          fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14,
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 14,
+          fontWeight: FontWeight.bold,
+        ),
         currentIndex: widget.defaultCurrent ?? _currentIndex,
         selectedItemColor: const Color(0xFF235347),
         unselectedItemColor: Colors.black26,

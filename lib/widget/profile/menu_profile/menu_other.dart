@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_event_id/feature/bloc/auth/auth_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuProfileOther extends StatelessWidget {
@@ -13,14 +14,16 @@ class MenuProfileOther extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Text(
+          Text(
             'Lainnya',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: TextStyle(
+                fontSize: ResponsiveBreakpoints.of(context).isTablet ? 28 : 20,
+                fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 18,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -29,22 +32,25 @@ class MenuProfileOther extends StatelessWidget {
                 children: <Widget>[
                   Icon(
                     Icons.info,
-                    color: Color(0xFF4E4F54),
-                    size: 26,
+                    color: const Color(0xFF4E4F54),
+                    size: ResponsiveBreakpoints.of(context).isTablet ? 36 : 26,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
                     'Tentang GoEventID',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                        fontSize: ResponsiveBreakpoints.of(context).isTablet
+                            ? 24
+                            : 18),
                   )
                 ],
               ),
               Icon(
                 Icons.keyboard_arrow_right_outlined,
-                color: Color(0xFF4E4F54),
-                size: 35,
+                color: const Color(0xFF4E4F54),
+                size: ResponsiveBreakpoints.of(context).isTablet ? 43 : 35,
               )
             ],
           ),
@@ -60,7 +66,7 @@ class MenuProfileOther extends StatelessWidget {
 
               await Future.delayed(const Duration(seconds: 1));
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -69,22 +75,26 @@ class MenuProfileOther extends StatelessWidget {
                   children: <Widget>[
                     Icon(
                       Icons.logout,
-                      color: Color(0xFF4E4F54),
-                      size: 26,
+                      color: const Color(0xFF4E4F54),
+                      size:
+                          ResponsiveBreakpoints.of(context).isTablet ? 36 : 26,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
                       'Keluar',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                          fontSize: ResponsiveBreakpoints.of(context).isTablet
+                              ? 24
+                              : 18),
                     )
                   ],
                 ),
                 Icon(
                   Icons.keyboard_arrow_right_outlined,
-                  color: Color(0xFF4E4F54),
-                  size: 35,
+                  color: const Color(0xFF4E4F54),
+                  size: ResponsiveBreakpoints.of(context).isTablet ? 43 : 35,
                 )
               ],
             ),

@@ -31,8 +31,8 @@ class _ListAcaraState extends State<ListAcara> {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
           if (state is AcaraError) {
             if (state.apiExeception!.statusCode == 401) {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Login()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const Login()));
               final prefs = await SharedPreferences.getInstance();
               prefs.clear();
             } else if (state.apiExeception!.statusCode != 500) {
@@ -58,13 +58,14 @@ class _ListAcaraState extends State<ListAcara> {
                         : 230
                     : ResponsiveBreakpoints.of(context).isTablet
                         ? 100
-                        : 70),
+                        : 76),
                 child: AppBar(
+                  automaticallyImplyLeading: false,
                   backgroundColor: Colors.white,
                   flexibleSpace: Container(
                     color: Colors.white,
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 50),
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 20, top: 40, bottom: 10),
                     // color: Colors.green,
                     height: searchVal == '' && scrollVal == 0
                         ? ResponsiveBreakpoints.of(context).isTablet
@@ -102,7 +103,7 @@ class _ListAcaraState extends State<ListAcara> {
                           height: searchVal == '' && scrollVal == 0 ? 18 : 0,
                         ),
                         searchVal == '' && scrollVal == 0
-                            ? Expanded(
+                            ? const Expanded(
                                 child: Image(
                                   image: AssetImage('assets/img/banner.png'),
                                   fit: BoxFit.cover,
@@ -121,10 +122,13 @@ class _ListAcaraState extends State<ListAcara> {
               body: SingleChildScrollView(
                 child: NotificationListener<ScrollEndNotification>(
                   onNotification: (notification) {
-                    if (notification.metrics.axis.name == 'vertical') {
-                      setState(() {
-                        scrollVal = notification.metrics.pixels;
-                      });
+                    if (mounted) {
+                      if (notification.metrics.axis.name == 'vertical') {
+                        setState(() {
+                          scrollVal = notification.metrics.pixels;
+                        });
+                      }
+                      return true;
                     }
 
                     return true;

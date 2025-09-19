@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_event_id/feature/bloc/tiket_acara/tiket_acara_bloc.dart';
 import 'package:go_event_id/helpers/currency_format.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class DetailTicket extends StatefulWidget {
@@ -21,9 +22,11 @@ class _DetailTicketState extends State<DetailTicket> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
+        Text(
           'Tiket',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: ResponsiveBreakpoints.of(context).isTablet ? 20 : 16),
         ),
         const SizedBox(
           height: 10,
@@ -48,7 +51,10 @@ class _DetailTicketState extends State<DetailTicket> {
                         enabled: widget.state is TiketAcaraLoading,
                         child: Container(
                           padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.only(bottom: 8),
+                          margin: EdgeInsets.only(
+                              bottom: ResponsiveBreakpoints.of(context).isTablet
+                                  ? 12
+                                  : 8),
                           decoration: BoxDecoration(
                               border: Border.all(
                                   color: selectedTicket ==
@@ -74,13 +80,18 @@ class _DetailTicketState extends State<DetailTicket> {
                                         color: const Color.fromARGB(
                                             103, 140, 179, 152),
                                         borderRadius: BorderRadius.circular(8)),
-                                    child: const Icon(
-                                      CupertinoIcons.tickets,
-                                      color: Color(0xFF173831),
-                                    ),
+                                    child: Icon(CupertinoIcons.tickets,
+                                        color: const Color(0xFF173831),
+                                        size: ResponsiveBreakpoints.of(context)
+                                                .isTablet
+                                            ? 35
+                                            : 24),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
+                                  SizedBox(
+                                    width: ResponsiveBreakpoints.of(context)
+                                            .isTablet
+                                        ? 20
+                                        : 10,
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -89,19 +100,27 @@ class _DetailTicketState extends State<DetailTicket> {
                                     children: <Widget>[
                                       Text(
                                         '${widget.state.tiketAcaraModel.data[index].tipeTiket}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 16),
+                                            fontSize: ResponsiveBreakpoints.of(
+                                                        context)
+                                                    .isTablet
+                                                ? 20
+                                                : 16),
                                       ),
                                       Text(
                                         CurrencyFormat.convertToIdr(
                                             widget.state.tiketAcaraModel
                                                 .data[index].hargaTiket,
                                             0),
-                                        style: const TextStyle(
-                                            fontSize: 16,
+                                        style: TextStyle(
+                                            fontSize: ResponsiveBreakpoints.of(
+                                                        context)
+                                                    .isTablet
+                                                ? 20
+                                                : 16,
                                             fontWeight: FontWeight.w600,
-                                            color: Color(0xFF173831)),
+                                            color: const Color(0xFF173831)),
                                       )
                                     ],
                                   )

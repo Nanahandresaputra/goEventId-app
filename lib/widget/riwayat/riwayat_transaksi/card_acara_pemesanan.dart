@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_event_id/screen/riwayat/detail_transaksi.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CardAcaraPemesanan extends StatelessWidget {
   final dynamic data;
@@ -40,8 +41,8 @@ class CardAcaraPemesanan extends StatelessWidget {
                   image: data?.bannerImg is String
                       ? MemoryImage(base64Decode(data!.bannerImg))
                       : const AssetImage('assets/img/event-banner-dummy.png'),
-                  height: 85,
-                  width: 85,
+                  height: ResponsiveBreakpoints.of(context).isTablet ? 110 : 85,
+                  width: ResponsiveBreakpoints.of(context).isTablet ? 110 : 85,
                 )),
             const SizedBox(
               width: 10,
@@ -54,9 +55,11 @@ class CardAcaraPemesanan extends StatelessWidget {
                     maxLines: 2,
                     '${data?.acara}',
                     softWrap: true,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: ResponsiveBreakpoints.of(context).isTablet
+                            ? 20
+                            : 16,
                         overflow: TextOverflow.ellipsis),
                   ),
                   const SizedBox(
@@ -67,9 +70,11 @@ class CardAcaraPemesanan extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          const Icon(
+                          Icon(
                             CupertinoIcons.ticket,
-                            size: 18,
+                            size: ResponsiveBreakpoints.of(context).isTablet
+                                ? 26
+                                : 18,
                             color: Colors.black54,
                           ),
                           const SizedBox(
@@ -78,15 +83,22 @@ class CardAcaraPemesanan extends StatelessWidget {
                           Text(
                             '${data?.tipeTiket}',
                             // softWrap: false,
-                            style: const TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize:
+                                    ResponsiveBreakpoints.of(context).isTablet
+                                        ? 16
+                                        : 12),
                           ),
                         ],
                       ),
                       Row(
                         children: <Widget>[
-                          const Icon(
+                          Icon(
                             CupertinoIcons.text_badge_checkmark,
-                            size: 18,
+                            size: ResponsiveBreakpoints.of(context).isTablet
+                                ? 26
+                                : 18,
                             color: Colors.black54,
                           ),
                           const SizedBox(
@@ -95,7 +107,12 @@ class CardAcaraPemesanan extends StatelessWidget {
                           Text(
                             '${data?.kodePemesanan}',
                             // softWrap: false,
-                            style: const TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize:
+                                    ResponsiveBreakpoints.of(context).isTablet
+                                        ? 16
+                                        : 12),
                           ),
                         ],
                       ),

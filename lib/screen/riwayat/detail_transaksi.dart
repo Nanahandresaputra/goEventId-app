@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_event_id/screen/riwayat/riwayat_transaksi.dart';
 import 'package:go_event_id/widget/riwayat/detail_transaksi/e_tiket.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class DetailTransaksi extends StatelessWidget {
   final dynamic data;
@@ -13,10 +14,12 @@ class DetailTransaksi extends StatelessWidget {
       appBar: AppBar(
           backgroundColor: const Color(0xFF235347),
           centerTitle: true,
-          title: const Text(
+          title: Text(
             'Detail Transaksi',
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+                color: Colors.white,
+                fontSize: ResponsiveBreakpoints.of(context).isTablet ? 28 : 18,
+                fontWeight: FontWeight.w500),
           ),
           elevation: 8,
           leading: Align(
@@ -28,10 +31,10 @@ class DetailTransaksi extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const RiwayatTransaksi()));
               },
-              icon: const Icon(
+              icon: Icon(
                 CupertinoIcons.arrow_left,
                 color: Colors.white,
-                size: 25,
+                size: ResponsiveBreakpoints.of(context).isTablet ? 36 : 25,
               ),
             ),
           )),

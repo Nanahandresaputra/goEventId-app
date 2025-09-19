@@ -10,6 +10,7 @@ import 'package:go_event_id/widget/utils/loadin_full_screen.dart';
 import 'package:go_event_id/widget/utils/panara_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuProfile extends StatefulWidget {
@@ -86,17 +87,23 @@ class _MenuProfileState extends State<MenuProfile> {
                   slivers: <Widget>[
                     SliverAppBar(
                       leadingWidth: double.maxFinite,
-                      toolbarHeight: 120,
+                      toolbarHeight: ResponsiveBreakpoints.of(context).isTablet
+                          ? 200
+                          : 120,
                       leading: Container(
                         width: double.maxFinite,
                         padding: const EdgeInsets.all(20),
                         child: Row(
                           children: <Widget>[
-                            const ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(100)),
+                            ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100)),
                                 child: Image(
-                                  image: AssetImage(
+                                  height:
+                                      ResponsiveBreakpoints.of(context).isTablet
+                                          ? 80
+                                          : 40,
+                                  image: const AssetImage(
                                       'assets/img/emoji-profile.jpg'),
                                   fit: BoxFit.contain,
                                 )),
@@ -106,10 +113,13 @@ class _MenuProfileState extends State<MenuProfile> {
                             Expanded(
                                 child: Text(
                               profileNama,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 20),
+                                  fontSize:
+                                      ResponsiveBreakpoints.of(context).isTablet
+                                          ? 28
+                                          : 20),
                             ))
                           ],
                         ),
@@ -130,7 +140,14 @@ class _MenuProfileState extends State<MenuProfile> {
                         height: 50,
                       ),
                       Center(
-                        child: Text('Versi ${_packageInfo.version}-Dev'),
+                        child: Text(
+                          'Versi ${_packageInfo.version}-Dev',
+                          style: TextStyle(
+                              fontSize:
+                                  ResponsiveBreakpoints.of(context).isTablet
+                                      ? 24
+                                      : 16),
+                        ),
                       )
                     ]))
                   ],

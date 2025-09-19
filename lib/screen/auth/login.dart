@@ -3,7 +3,7 @@ import 'package:go_event_id/widget/auth/login/form.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class Login extends StatelessWidget {
-  Login({super.key});
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {

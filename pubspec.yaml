@@ -91,6 +91,7 @@ flutter:
     - assets/img/execption-img.jpg
     - assets/img/network-error.png
     - assets/img/loading-animate.gif
+    - assets/img/bg-payment.jpg
     - .env
   #   - images/a_dot_ham.jpeg
 

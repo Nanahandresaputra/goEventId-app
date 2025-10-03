@@ -33,8 +33,6 @@ Future main() async {
             child: child!,
           );
         },
-        home: ToastificationWrapper(
-          child: Login(),
-        ),
+        home: const ToastificationWrapper(child: Login()),
       )));
 }

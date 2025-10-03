@@ -187,7 +187,10 @@ class _PaymentState extends State<Payment> {
                             _webViewController = controller;
                           },
                           onReceivedError: (controller, request, error) async {
-                            if (request.url
+                            if (error.description
+                                .contains("ERR_BLOCKED_BY_ORB")) {
+                              return;
+                            } else if (request.url
                                 .toString()
                                 .contains('transaction_status=settlement')) {
                               if (_webViewController != null) {

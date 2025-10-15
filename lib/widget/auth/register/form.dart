@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_event_id/feature/bloc/auth/auth_bloc.dart';
 import 'package:go_event_id/helpers/email_validator.dart';
@@ -12,7 +13,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 
 class FormRegister extends StatefulWidget {
-  FormRegister({super.key});
+  const FormRegister({super.key});
 
   @override
   State<FormRegister> createState() => _FormRegisterState();
@@ -25,6 +26,8 @@ class _FormRegisterState extends State<FormRegister> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
+
+  bool _callbackRegistered = false;
 
   @override
   void dispose() {
@@ -44,8 +47,13 @@ class _FormRegisterState extends State<FormRegister> {
           showToast(context, 'Success', 'Pendaftaran akun telah berhasil!',
               ToastificationType.success);
 
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Login()));
+          setState(() {
+            _callbackRegistered = true;
+          });
+
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const Login();
+          }));
         }
         if (state is RegisterError) {
           showModernDialog(
@@ -54,15 +62,20 @@ class _FormRegisterState extends State<FormRegister> {
               state.apiExeception!.message!,
               "Mengerti",
               PanaraDialogType.error);
+          setState(() {
+            _callbackRegistered = true;
+          });
         }
       }
     }
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          registerSubmit(context, state);
-        });
+        if (!_callbackRegistered) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            registerSubmit(context, state);
+          });
+        }
         return Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
           child: Column(
@@ -113,6 +126,9 @@ class _FormRegisterState extends State<FormRegister> {
                               : 400,
                           isLoading: state is RegisterLoading,
                           onPressed: () async {
+                            setState(() {
+                              _callbackRegistered = false;
+                            });
                             Map<String, String> body = {
                               'nama': nameController.text,
                               'email': emailController.text,

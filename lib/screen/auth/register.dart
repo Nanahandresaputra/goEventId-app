@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_event_id/screen/auth/login.dart';
 import 'package:go_event_id/widget/auth/register/form.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:toastification/toastification.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
